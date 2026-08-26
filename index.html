@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타이머</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .timer {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        #time {
+            font-size: 70px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 80px;
+            padding: 10px;
+            font-size: 20px;
+            text-align: center;
+            margin: 5px;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="timer">
+    <h1>타이머</h1>
+
+    <div id="time">00:00</div>
+
+    <input type="number" id="minutes" placeholder="분" min="0">
+    <input type="number" id="seconds" placeholder="초" min="0" max="59">
+
+    <br>
+
+    <button onclick="startTimer()">시작</button>
+    <button onclick="pauseTimer()">일시정지</button>
+    <button onclick="resetTimer()">초기화</button>
+</div>
+
+<script>
+    let totalSeconds = 0;
+    let timer = null;
+
+    function updateDisplay() {
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+
+        document.getElementById("time").textContent =
+            String(minutes).padStart(2, "0") + ":" +
+            String(seconds).padStart(2, "0");
+    }
+
+    function startTimer() {
+        if (timer !== null) return;
+
+        if (totalSeconds === 0) {
+            let minutes = Number(document.getElementById("minutes").value) || 0;
+            let seconds = Number(document.getElementById("seconds").value) || 0;
+
+            totalSeconds = minutes * 60 + seconds;
+        }
+
+        if (totalSeconds <= 0) return;
+
+        timer = setInterval(() => {
+            totalSeconds--;
+            updateDisplay();
+
+            if (totalSeconds <= 0) {
+                clearInterval(timer);
+                timer = null;
+                alert("시간이 끝났습니다!");
+            }
+        }, 1000);
+    }
+
+    function pauseTimer() {
+        clearInterval(timer);
+        timer = null;
+    }
+
+    function resetTimer() {
+        clearInterval(timer);
+        timer = null;
+        totalSeconds = 0;
+        updateDisplay();
+
+        document.getElementById("minutes").value = "";
+        document.getElementById("seconds").value = "";
+    }
+</script>
+
+</body>
+</html>
