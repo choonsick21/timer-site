@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Timer</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     margin:0;
@@ -19,6 +22,7 @@ html,body{
 body{
     background:#000;
     color:#fff;
+
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -48,14 +52,19 @@ body{
 .title{
     font-size:30px;
     font-weight:700;
+
     letter-spacing:-1px;
+
     margin-bottom:30px;
 }
 
 .time{
     font-size:clamp(78px,18vw,108px);
+
     line-height:1;
+
     font-weight:700;
+
     letter-spacing:-6px;
 
     font-variant-numeric:tabular-nums;
@@ -66,13 +75,16 @@ body{
 .controls{
     display:flex;
     justify-content:center;
+
     gap:9px;
+
+    flex-wrap:wrap;
 }
 
 button{
+    font-family:inherit;
     border:0;
     cursor:pointer;
-    font-family:inherit;
 }
 
 .primary{
@@ -86,7 +98,8 @@ button{
     font-size:16px;
     font-weight:600;
 
-    transition:transform .12s ease;
+    transition:
+        transform .12s ease;
 }
 
 .primary:active{
@@ -120,19 +133,22 @@ button{
 
 
 /* =========================
-   프리미엄 설정
+   설정
 ========================= */
 
 .settings{
     margin-top:25px;
+
     padding:17px;
 
     border-radius:20px;
 
     background:#111;
+
     border:1px solid #252525;
 
     opacity:0;
+
     transform:translateY(8px);
 
     pointer-events:none;
@@ -144,6 +160,7 @@ button{
 
 .settings.show{
     opacity:1;
+
     transform:translateY(0);
 
     pointer-events:auto;
@@ -151,7 +168,9 @@ button{
 
 .settings-title{
     color:#999;
+
     font-size:12px;
+
     margin-bottom:10px;
 }
 
@@ -195,21 +214,26 @@ button{
 
 .modal{
     position:fixed;
+
     inset:0;
 
     display:flex;
+
     align-items:flex-end;
+
     justify-content:center;
 
     padding:12px;
 
-    background:rgba(0,0,0,.7);
+    background:rgba(0,0,0,.72);
 
     backdrop-filter:blur(20px);
     -webkit-backdrop-filter:blur(20px);
 
     opacity:0;
+
     visibility:hidden;
+
     pointer-events:none;
 
     transition:
@@ -222,12 +246,17 @@ button{
     opacity:1;
 
     visibility:visible;
+
     pointer-events:auto;
+}
+
+.modal.closing{
+    opacity:0;
 }
 
 
 /* =========================
-   창
+   결제창
 ========================= */
 
 .sheet{
@@ -246,14 +275,14 @@ button{
     background:
         linear-gradient(
             145deg,
-            rgba(45,45,47,.98),
-            rgba(24,24,26,.98)
+            rgba(45,45,47,.99),
+            rgba(24,24,26,.99)
         );
 
     border:1px solid rgba(255,255,255,.12);
 
     box-shadow:
-        0 -20px 70px rgba(0,0,0,.6);
+        0 -20px 70px rgba(0,0,0,.65);
 
     transform:
         translate3d(0,55px,0)
@@ -262,9 +291,9 @@ button{
     opacity:0;
 
     transition:
-        height .5s cubic-bezier(.22,1,.36,1),
-        transform .5s cubic-bezier(.22,1,.36,1),
-        opacity .3s ease;
+        height .48s cubic-bezier(.22,1,.36,1),
+        transform .48s cubic-bezier(.22,1,.36,1),
+        opacity .28s ease;
 
     will-change:
         height,
@@ -278,10 +307,6 @@ button{
         scale(1);
 
     opacity:1;
-}
-
-.modal.closing{
-    opacity:0;
 }
 
 .modal.closing .sheet{
@@ -323,30 +348,33 @@ button{
     height:32px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
     border-radius:50%;
 
     background:#303034;
+
     color:#aaa;
 
     font-size:20px;
 
-    z-index:50;
+    /*
+       클릭 / 터치 완전 차단
+    */
+    pointer-events:none;
+
+    user-select:none;
 
     /*
-       빠르게 이동
+       빠른 회피
     */
-
     transition:
-        left .11s cubic-bezier(.15,.8,.25,1),
-        top .11s cubic-bezier(.15,.8,.25,1),
-        transform .08s ease;
-}
+        left .07s linear,
+        top .07s linear;
 
-.close:active{
-    transform:scale(.9);
+    z-index:50;
 }
 
 
@@ -358,8 +386,8 @@ button{
     width:100%;
 
     transition:
-        opacity .3s ease,
-        transform .35s cubic-bezier(.22,1,.36,1);
+        opacity .25s ease,
+        transform .32s cubic-bezier(.22,1,.36,1);
 }
 
 .page.visible{
@@ -374,7 +402,7 @@ button{
     opacity:0;
 
     transform:
-        translate3d(0,16px,0)
+        translate3d(0,15px,0)
         scale(.98);
 }
 
@@ -382,7 +410,7 @@ button{
     opacity:0;
 
     transform:
-        translate3d(0,-12px,0)
+        translate3d(0,-10px,0)
         scale(.98);
 }
 
@@ -395,6 +423,7 @@ button{
     text-align:center;
 
     font-size:17px;
+
     font-weight:600;
 
     margin-bottom:22px;
@@ -411,6 +440,7 @@ button{
 
 .product-name{
     font-size:24px;
+
     font-weight:700;
 
     letter-spacing:-.7px;
@@ -430,6 +460,7 @@ button{
     padding:20px 0;
 
     font-size:40px;
+
     font-weight:700;
 
     letter-spacing:-1.5px;
@@ -443,6 +474,7 @@ button{
     color:#98989d;
 
     font-size:12px;
+
     font-weight:400;
 }
 
@@ -465,6 +497,7 @@ button{
 
 .label{
     color:#98989d;
+
     font-size:13px;
 }
 
@@ -472,6 +505,7 @@ button{
     max-width:65%;
 
     overflow:hidden;
+
     text-overflow:ellipsis;
 
     font-size:12px;
@@ -514,6 +548,7 @@ button{
     color:#000;
 
     font-size:16px;
+
     font-weight:600;
 
     transition:
@@ -546,6 +581,7 @@ button{
     background:#303034;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -667,9 +703,11 @@ button{
     border-radius:50%;
 
     background:#fff;
+
     color:#000;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
@@ -717,6 +755,10 @@ button{
 
 <body>
 
+
+<!-- =========================
+     메인
+========================= -->
 
 <div class="app">
 
@@ -806,19 +848,26 @@ button{
         <div class="handle"></div>
 
 
-        <button
+        <!--
+            장식용 X
+            실제 클릭 불가능
+        -->
+
+        <div
             class="close"
             id="closeButton"
-            onclick="closePayment()"
+            aria-hidden="true"
         >
             ×
-        </button>
+        </div>
 
 
         <div class="sheet-content">
 
 
-            <!-- 결제 -->
+            <!-- =================
+                 결제 화면
+            ================= -->
 
             <div
                 class="page visible"
@@ -904,7 +953,9 @@ button{
 
 
 
-            <!-- 인증 -->
+            <!-- =================
+                 비밀번호
+            ================= -->
 
             <div
                 class="page entering"
@@ -946,7 +997,9 @@ button{
 
 
 
-            <!-- 처리 -->
+            <!-- =================
+                 로딩
+            ================= -->
 
             <div
                 class="page entering"
@@ -972,7 +1025,9 @@ button{
 
 
 
-            <!-- 완료 -->
+            <!-- =================
+                 완료
+            ================= -->
 
             <div
                 class="page entering"
@@ -1009,14 +1064,17 @@ button{
 
 <script>
 
+
 /* =========================
-   기본 변수
+   타이머 변수
 ========================= */
 
 let running = false;
+
 let animationFrame = null;
 
 let remaining = 3;
+
 let defaultSeconds = 3;
 
 let endTime = 0;
@@ -1025,18 +1083,22 @@ let premium = false;
 
 
 /* =========================
-   시간 표시
+   표시
 ========================= */
 
 function updateDisplay(){
 
     const minutes =
-        Math.floor(remaining / 60);
+        Math.floor(
+            remaining / 60
+        );
 
     const seconds =
         remaining % 60;
 
-    document.getElementById("time")
+
+    document
+        .getElementById("time")
         .textContent =
         String(minutes).padStart(2,"0")
         + ":" +
@@ -1045,7 +1107,7 @@ function updateDisplay(){
 
 
 /* =========================
-   타이머
+   타이머 실행
 ========================= */
 
 function tick(){
@@ -1054,14 +1116,18 @@ function tick(){
         return;
     }
 
+
     remaining =
         Math.max(
             0,
             Math.ceil(
-                (endTime - performance.now())
-                / 1000
+                (
+                    endTime -
+                    performance.now()
+                ) / 1000
             )
         );
+
 
     updateDisplay();
 
@@ -1069,6 +1135,7 @@ function tick(){
     if(remaining <= 0){
 
         running = false;
+
         animationFrame = null;
 
 
@@ -1076,7 +1143,7 @@ function tick(){
 
             setTimeout(
                 openPayment,
-                200
+                180
             );
 
             return;
@@ -1093,9 +1160,15 @@ function tick(){
 
 
     animationFrame =
-        requestAnimationFrame(tick);
+        requestAnimationFrame(
+            tick
+        );
 }
 
+
+/* =========================
+   시작
+========================= */
 
 function startTimer(){
 
@@ -1124,6 +1197,10 @@ function startTimer(){
 }
 
 
+/* =========================
+   일시정지
+========================= */
+
 function pauseTimer(){
 
     if(!running){
@@ -1135,8 +1212,10 @@ function pauseTimer(){
         Math.max(
             0,
             Math.ceil(
-                (endTime - performance.now())
-                / 1000
+                (
+                    endTime -
+                    performance.now()
+                ) / 1000
             )
         );
 
@@ -1157,6 +1236,10 @@ function pauseTimer(){
     updateDisplay();
 }
 
+
+/* =========================
+   초기화
+========================= */
 
 function resetTimer(){
 
@@ -1182,9 +1265,11 @@ function setTime(){
 
     let value =
         Number(
-            document.getElementById(
-                "timeInput"
-            ).value
+            document
+                .getElementById(
+                    "timeInput"
+                )
+                .value
         );
 
 
@@ -1194,7 +1279,10 @@ function setTime(){
 
 
     value =
-        Math.min(value,9999);
+        Math.min(
+            value,
+            9999
+        );
 
 
     defaultSeconds =
@@ -1212,7 +1300,10 @@ function setTime(){
 function openPayment(){
 
     const modal =
-        document.getElementById("modal");
+        document.getElementById(
+            "modal"
+        );
+
 
     const payment =
         document.getElementById(
@@ -1227,22 +1318,28 @@ function openPayment(){
         "visible";
 
 
-    requestAnimationFrame(() => {
+    requestAnimationFrame(
+        () => {
 
-        modal.classList.add("open");
+            modal.classList.add(
+                "open"
+            );
 
-    });
+        }
+    );
 }
 
 
 /* =========================
-   창 높이
+   창 높이 계산
 ========================= */
 
 function resizeSheet(page){
 
     const sheet =
-        document.getElementById("sheet");
+        document.getElementById(
+            "sheet"
+        );
 
 
     const oldDisplay =
@@ -1277,6 +1374,7 @@ function resizeSheet(page){
 
 
     if(oldDisplay){
+
         page.style.display =
             oldDisplay;
     }
@@ -1288,7 +1386,7 @@ function resizeSheet(page){
 
 
 /* =========================
-   페이지 전환
+   페이지 변경
 ========================= */
 
 function changePage(from,to){
@@ -1321,35 +1419,40 @@ function changePage(from,to){
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        from.style.display =
-            "none";
-
-
-        from.classList.remove(
-            "leaving"
-        );
+            from.style.display =
+                "none";
 
 
-        requestAnimationFrame(() => {
-
-            to.classList.remove(
-                "entering"
+            from.classList.remove(
+                "leaving"
             );
 
-            to.classList.add(
-                "visible"
+
+            requestAnimationFrame(
+                () => {
+
+                    to.classList.remove(
+                        "entering"
+                    );
+
+                    to.classList.add(
+                        "visible"
+                    );
+
+                }
             );
 
-        });
-
-    },320);
+        },
+        280
+    );
 }
 
 
 /* =========================
-   구매
+   구매 버튼
 ========================= */
 
 function showPassword(){
@@ -1358,6 +1461,7 @@ function showPassword(){
         document.getElementById(
             "paymentPage"
         );
+
 
     const password =
         document.getElementById(
@@ -1371,15 +1475,18 @@ function showPassword(){
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        document
-            .getElementById(
-                "password"
-            )
-            .focus();
+            document
+                .getElementById(
+                    "password"
+                )
+                .focus();
 
-    },500);
+        },
+        450
+    );
 }
 
 
@@ -1390,9 +1497,11 @@ function showPassword(){
 function confirmPassword(){
 
     const password =
-        document.getElementById(
-            "password"
-        ).value;
+        document
+            .getElementById(
+                "password"
+            )
+            .value;
 
 
     if(password.length === 0){
@@ -1404,6 +1513,7 @@ function confirmPassword(){
         document.getElementById(
             "passwordPage"
         );
+
 
     const loadingPage =
         document.getElementById(
@@ -1417,42 +1527,47 @@ function confirmPassword(){
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        const loading =
-            document.getElementById(
-                "loadingPage"
+            const loading =
+                document.getElementById(
+                    "loadingPage"
+                );
+
+
+            const success =
+                document.getElementById(
+                    "successPage"
+                );
+
+
+            changePage(
+                loading,
+                success
             );
 
-        const success =
-            document.getElementById(
-                "successPage"
+
+            premium = true;
+
+
+            document
+                .getElementById(
+                    "settings"
+                )
+                .classList.add(
+                    "show"
+                );
+
+
+            setTimeout(
+                closePayment,
+                3000
             );
 
-
-        changePage(
-            loading,
-            success
-        );
-
-
-        premium = true;
-
-
-        document
-            .getElementById(
-                "settings"
-            )
-            .classList.add("show");
-
-
-        setTimeout(() => {
-
-            closePayment();
-
-        },3000);
-
-    },2000);
+        },
+        2000
+    );
 }
 
 
@@ -1478,20 +1593,23 @@ function closePayment(){
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        modal.classList.remove(
-            "closing"
-        );
-
-
-        modal.style.visibility =
-            "hidden";
+            modal.classList.remove(
+                "closing"
+            );
 
 
-        resetPages();
+            modal.style.visibility =
+                "hidden";
 
-    },520);
+
+            resetPages();
+
+        },
+        520
+    );
 }
 
 
@@ -1522,18 +1640,20 @@ function resetPages(){
     ];
 
 
-    pages.forEach(page => {
+    pages.forEach(
+        page => {
 
-        page.style.display =
-            "none";
+            page.style.display =
+                "none";
 
-        page.classList.remove(
-            "visible",
-            "leaving",
-            "entering"
-        );
+            page.classList.remove(
+                "visible",
+                "leaving",
+                "entering"
+            );
 
-    });
+        }
+    );
 
 
     const payment =
@@ -1545,6 +1665,7 @@ function resetPages(){
     payment.style.display =
         "block";
 
+
     payment.classList.add(
         "visible"
     );
@@ -1555,7 +1676,9 @@ function resetPages(){
     ).value = "";
 
 
-    /* X 원래 위치 */
+    /*
+       X 위치 초기화
+    */
 
     const close =
         document.getElementById(
@@ -1576,27 +1699,32 @@ function resetPages(){
         "18px";
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        resizeSheet(payment);
+            resizeSheet(payment);
 
-    },20);
+        },
+        20
+    );
 }
 
 
-/* =========================
-   X 버튼 빠른 회피
-========================= */
+/* ==================================================
+   X 버튼 도망 시스템
+================================================== */
 
 const closeButton =
     document.getElementById(
         "closeButton"
     );
 
+
 const sheet =
     document.getElementById(
         "sheet"
     );
+
 
 const modal =
     document.getElementById(
@@ -1604,12 +1732,18 @@ const modal =
     );
 
 
-let lastEscape = 0;
+let lastEscape =
+    0;
 
 
 document.addEventListener(
     "mousemove",
     (event) => {
+
+        /*
+           결제창이 열려있지 않으면
+           아무것도 하지 않음
+        */
 
         if(
             !modal.classList.contains(
@@ -1628,6 +1762,7 @@ document.addEventListener(
             rect.left +
             rect.width / 2;
 
+
         const centerY =
             rect.top +
             rect.height / 2;
@@ -1637,127 +1772,178 @@ document.addEventListener(
             centerX -
             event.clientX;
 
+
         const dy =
             centerY -
             event.clientY;
 
 
         const distance =
-            Math.hypot(dx,dy);
+            Math.hypot(
+                dx,
+                dy
+            );
 
 
         /*
-           가까워졌을 때만 작동
+           마우스가 130px 이내로 오면
+           즉시 회피
         */
 
-        if(distance < 85){
-
-            const now =
-                performance.now();
-
-
-            /*
-               너무 자주 움직이지 않도록
-               70ms 제한
-            */
-
-            if(
-                now - lastEscape <
-                70
-            ){
-                return;
-            }
-
-
-            lastEscape =
-                now;
-
-
-            const length =
-                Math.hypot(dx,dy) || 1;
-
-
-            /*
-               빠르게 34px 회피
-            */
-
-            const move =
-                34;
-
-
-            let x =
-                closeButton.offsetLeft
-                +
-                (dx / length) * move;
-
-
-            let y =
-                closeButton.offsetTop
-                +
-                (dy / length) * move;
-
-
-            /*
-               창 내부 제한
-            */
-
-            x =
-                Math.max(
-                    8,
-                    Math.min(
-                        x,
-                        sheet.clientWidth -
-                        closeButton.offsetWidth -
-                        8
-                    )
-                );
-
-
-            y =
-                Math.max(
-                    8,
-                    Math.min(
-                        y,
-                        sheet.clientHeight -
-                        closeButton.offsetHeight -
-                        8
-                    )
-                );
-
-
-            closeButton.style.position =
-                "absolute";
-
-
-            closeButton.style.right =
-                "auto";
-
-
-            closeButton.style.left =
-                x + "px";
-
-
-            closeButton.style.top =
-                y + "px";
-
+        if(distance > 130){
+            return;
         }
+
+
+        const now =
+            performance.now();
+
+
+        /*
+           매우 빠르게 반응
+        */
+
+        if(
+            now -
+            lastEscape <
+            25
+        ){
+            return;
+        }
+
+
+        lastEscape =
+            now;
+
+
+        const length =
+            Math.hypot(
+                dx,
+                dy
+            ) || 1;
+
+
+        /*
+           마우스 반대쪽으로
+           빠르게 크게 이동
+        */
+
+        const move =
+            70;
+
+
+        let x =
+            closeButton.offsetLeft
+            +
+            (
+                dx / length
+            )
+            *
+            move;
+
+
+        let y =
+            closeButton.offsetTop
+            +
+            (
+                dy / length
+            )
+            *
+            move;
+
+
+        /*
+           모서리 방지
+        */
+
+        const padding =
+            18;
+
+
+        const minX =
+            padding;
+
+
+        const minY =
+            padding;
+
+
+        const maxX =
+            Math.max(
+                minX,
+                sheet.clientWidth -
+                closeButton.offsetWidth -
+                padding
+            );
+
+
+        const maxY =
+            Math.max(
+                minY,
+                sheet.clientHeight -
+                closeButton.offsetHeight -
+                padding
+            );
+
+
+        x =
+            Math.max(
+                minX,
+                Math.min(
+                    x,
+                    maxX
+                )
+            );
+
+
+        y =
+            Math.max(
+                minY,
+                Math.min(
+                    y,
+                    maxY
+                )
+            );
+
+
+        closeButton.style.position =
+            "absolute";
+
+
+        closeButton.style.right =
+            "auto";
+
+
+        closeButton.style.left =
+            x + "px";
+
+
+        closeButton.style.top =
+            y + "px";
 
     }
 );
 
 
 /* =========================
-   엔터키
+   비밀번호 Enter
 ========================= */
 
 document
-    .getElementById("password")
+    .getElementById(
+        "password"
+    )
     .addEventListener(
         "keydown",
-        (event) => {
+        event => {
 
-            if(event.key === "Enter"){
+            if(
+                event.key ===
+                "Enter"
+            ){
+
                 confirmPassword();
+
             }
 
         }
@@ -1765,7 +1951,7 @@ document
 
 
 /* =========================
-   시작
+   초기 실행
 ========================= */
 
 updateDisplay();
