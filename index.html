@@ -10,13 +10,17 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
     margin: 0;
-    min-height: 100vh;
+    width: 100%;
+    min-height: 100%;
+}
 
+body {
+    min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
     font-family:
         -apple-system,
@@ -29,10 +33,20 @@ body {
     color: white;
 
     background:
-        radial-gradient(circle at 50% 0%, #252525 0%, #090909 45%, #000 100%);
+        radial-gradient(
+            circle at 50% -15%,
+            #292929 0%,
+            #0b0b0b 45%,
+            #000000 100%
+        );
+
+    overflow: hidden;
 }
 
-/* 타이머 */
+
+/* =========================
+   타이머
+========================= */
 
 .timer-card {
     width: min(92vw, 520px);
@@ -43,33 +57,51 @@ body {
     background: rgba(35,35,35,.58);
 
     border: 1px solid rgba(255,255,255,.12);
-
     border-radius: 38px;
 
     backdrop-filter: blur(35px);
     -webkit-backdrop-filter: blur(35px);
 
     box-shadow:
-        0 35px 100px rgba(0,0,0,.55),
+        0 35px 100px rgba(0,0,0,.6),
         inset 0 1px 1px rgba(255,255,255,.08);
+
+    animation: cardIn .6s ease;
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .timer-title {
-    margin: 0 0 30px;
+    margin-bottom: 28px;
 
     font-size: 29px;
     font-weight: 700;
+
+    letter-spacing: -1px;
 }
 
 #time {
-    margin-bottom: 35px;
+    margin-bottom: 36px;
 
-    font-size: clamp(70px, 16vw, 100px);
+    font-size: clamp(70px, 17vw, 100px);
     font-weight: 700;
 
     letter-spacing: -6px;
 
     font-variant-numeric: tabular-nums;
+
+    transition:
+        transform .25s ease;
 }
 
 .timer-button {
@@ -79,13 +111,16 @@ body {
     border: 0;
     border-radius: 20px;
 
-    background: #fff;
-    color: #000;
+    background: white;
+    color: black;
 
     font-size: 18px;
     font-weight: 650;
 
     cursor: pointer;
+
+    box-shadow:
+        0 10px 30px rgba(255,255,255,.08);
 
     transition:
         transform .25s cubic-bezier(.2,.8,.2,1),
@@ -96,7 +131,7 @@ body {
     transform: scale(1.07);
 
     box-shadow:
-        0 15px 35px rgba(255,255,255,.15);
+        0 18px 40px rgba(255,255,255,.13);
 }
 
 .timer-button:active {
@@ -104,92 +139,105 @@ body {
 }
 
 
-/* 결제 배경 */
+/* =========================
+   결제 배경
+========================= */
 
 .modal {
     position: fixed;
     inset: 0;
 
     display: none;
-
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
 
-    padding: 20px;
+    background: rgba(0,0,0,.58);
 
-    background: rgba(0,0,0,.72);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    padding: 18px;
 
-    animation: fade .35s ease;
-}
-
-@keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    z-index: 10;
 }
 
 
-/* 결제창 */
+/* =========================
+   결제 시트
+========================= */
 
-.payment {
-    width: min(94vw, 460px);
+.payment-sheet {
+    width: min(100%, 470px);
+
+    max-height: 94vh;
+    overflow-y: auto;
 
     padding: 27px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(48,48,48,.95),
-            rgba(20,20,20,.97)
+            rgba(47,47,47,.98),
+            rgba(18,18,18,.99)
         );
 
-    border: 1px solid rgba(255,255,255,.14);
+    border:
+        1px solid rgba(255,255,255,.14);
 
     border-radius: 34px;
 
     box-shadow:
-        0 40px 120px rgba(0,0,0,.7),
+        0 -20px 90px rgba(0,0,0,.5),
+        0 30px 100px rgba(0,0,0,.7),
         inset 0 1px 1px rgba(255,255,255,.08);
 
     animation:
-        paymentAppear .45s cubic-bezier(.2,.8,.2,1);
+        sheetUp .45s cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes paymentAppear {
+@keyframes sheetUp {
     from {
         opacity: 0;
-        transform:
-            translateY(25px)
-            scale(.94);
+        transform: translateY(100px) scale(.97);
     }
 
     to {
         opacity: 1;
-        transform:
-            translateY(0)
-            scale(1);
+        transform: translateY(0) scale(1);
     }
+}
+
+
+/* 위 손잡이 */
+
+.handle {
+    width: 42px;
+    height: 5px;
+
+    margin: 0 auto 25px;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.2);
 }
 
 
 /* 상단 */
 
-.top {
+.store-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
-    margin-bottom: 27px;
+    margin-bottom: 25px;
 }
 
-.logo {
+.store-name {
     font-size: 17px;
     font-weight: 700;
 }
 
-.demo {
+.demo-label {
     padding: 6px 9px;
 
     border-radius: 9px;
@@ -206,17 +254,17 @@ body {
 /* 상품 */
 
 .product {
-    padding-bottom: 23px;
+    padding-bottom: 22px;
 
     border-bottom:
         1px solid rgba(255,255,255,.09);
 }
 
 .product-name {
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 700;
 
-    letter-spacing: -.7px;
+    letter-spacing: -.8px;
 }
 
 .product-description {
@@ -231,18 +279,18 @@ body {
 /* 가격 */
 
 .price-area {
-    padding: 24px 0 20px;
+    padding: 22px 0 18px;
 }
 
 .price {
-    font-size: 42px;
+    font-size: 43px;
     font-weight: 750;
 
     letter-spacing: -2px;
 }
 
 .billing {
-    margin-top: 4px;
+    margin-top: 5px;
 
     color: #888;
 
@@ -253,16 +301,17 @@ body {
 /* 계정 */
 
 .account {
-    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     padding: 15px 17px;
 
     border-radius: 17px;
 
     background: rgba(255,255,255,.055);
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 14px;
 }
 
 .account-label {
@@ -271,8 +320,8 @@ body {
 }
 
 .account-id {
-    font-size: 12px;
     color: #ddd;
+    font-size: 12px;
 }
 
 
@@ -287,15 +336,15 @@ body {
 }
 
 .method {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     padding: 15px 17px;
 
     border-radius: 17px;
 
     background: rgba(255,255,255,.055);
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 
     border: 1px solid rgba(255,255,255,.07);
 }
@@ -307,16 +356,17 @@ body {
 }
 
 .card-icon {
-    width: 34px;
+    width: 35px;
     height: 24px;
 
     border-radius: 6px;
 
-    background: linear-gradient(
-        145deg,
-        #ddd,
-        #777
-    );
+    background:
+        linear-gradient(
+            145deg,
+            #eeeeee,
+            #777777
+        );
 
     position: relative;
 }
@@ -332,7 +382,7 @@ body {
 
     height: 3px;
 
-    border-radius: 2px;
+    border-radius: 3px;
 
     background: #333;
 }
@@ -341,7 +391,7 @@ body {
     font-size: 13px;
 }
 
-.check {
+.selected {
     width: 20px;
     height: 20px;
 
@@ -360,9 +410,9 @@ body {
 
 /* 구매 버튼 */
 
-.buy {
+.buy-button {
     width: 100%;
-    height: 56px;
+    height: 57px;
 
     margin-top: 22px;
 
@@ -372,7 +422,7 @@ body {
     background: white;
     color: black;
 
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
 
     cursor: pointer;
@@ -382,67 +432,70 @@ body {
         box-shadow .2s ease;
 }
 
-.buy:hover {
+.buy-button:hover {
     transform: scale(1.025);
 
     box-shadow:
-        0 10px 30px rgba(255,255,255,.12);
+        0 12px 35px rgba(255,255,255,.12);
 }
 
-.buy:active {
+.buy-button:active {
     transform: scale(.97);
 }
 
 
-/* 인증 */
+/* =========================
+   인증 화면
+========================= */
 
-.auth {
+.auth-screen {
     display: none;
 
     text-align: center;
 
-    padding: 25px 10px 15px;
+    padding: 35px 10px 20px;
 }
 
-.face {
-    width: 78px;
-    height: 78px;
+.face-circle {
+    width: 82px;
+    height: 82px;
 
-    margin: 10px auto 24px;
-
-    border: 2px solid #fff;
-
-    border-radius: 50%;
+    margin: 0 auto 24px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 31px;
+    border:
+        2px solid rgba(255,255,255,.85);
+
+    border-radius: 50%;
+
+    font-size: 34px;
 
     animation:
-        faceScan 1.8s infinite;
+        facePulse 1.5s infinite;
 }
 
-@keyframes faceScan {
-    0%,100% {
+@keyframes facePulse {
+    0%, 100% {
         box-shadow:
             0 0 0 rgba(255,255,255,0);
     }
 
     50% {
         box-shadow:
-            0 0 35px rgba(255,255,255,.18);
+            0 0 35px rgba(255,255,255,.16);
     }
 }
 
-.auth h2 {
+.auth-screen h2 {
     margin: 0 0 8px;
 
     font-size: 23px;
 }
 
-.auth p {
+.auth-screen p {
     margin: 0;
 
     color: #888;
@@ -451,25 +504,27 @@ body {
 }
 
 
-/* 결제중 */
+/* =========================
+   결제 중
+========================= */
 
-.loading {
+.loading-screen {
     display: none;
 
     text-align: center;
 
-    padding: 35px 10px;
+    padding: 45px 10px;
 }
 
 .spinner {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
 
     margin: 0 auto 23px;
 
     border-radius: 50%;
 
-    border: 4px solid #444;
+    border: 4px solid #3d3d3d;
     border-top-color: white;
 
     animation:
@@ -482,13 +537,13 @@ body {
     }
 }
 
-.loading h2 {
+.loading-screen h2 {
     margin: 0 0 8px;
 
     font-size: 22px;
 }
 
-.loading p {
+.loading-screen p {
     margin: 0;
 
     color: #888;
@@ -497,19 +552,36 @@ body {
 }
 
 
-/* 완료 */
+/* =========================
+   결제 완료
+========================= */
 
-.success {
+.success-screen {
     display: none;
 
     text-align: center;
 
-    padding: 30px 10px;
+    padding: 35px 10px 30px;
+
+    animation:
+        successIn .5s cubic-bezier(.2,1.3,.4,1);
+}
+
+@keyframes successIn {
+    from {
+        opacity: 0;
+        transform: scale(.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .success-icon {
-    width: 70px;
-    height: 70px;
+    width: 72px;
+    height: 72px;
 
     margin: 0 auto 22px;
 
@@ -522,13 +594,13 @@ body {
     background: white;
     color: black;
 
-    font-size: 35px;
+    font-size: 36px;
 
     animation:
-        pop .5s cubic-bezier(.2,1.5,.4,1);
+        checkPop .5s cubic-bezier(.2,1.5,.4,1);
 }
 
-@keyframes pop {
+@keyframes checkPop {
     from {
         transform: scale(0);
     }
@@ -538,23 +610,25 @@ body {
     }
 }
 
-.success h2 {
-    margin: 0 0 9px;
+.success-screen h2 {
+    margin: 0 0 10px;
 
-    font-size: 24px;
+    font-size: 25px;
 }
 
-.success p {
+.success-screen p {
     margin: 0;
 
     color: #888;
 
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
 
-/* 모바일 */
+/* =========================
+   모바일
+========================= */
 
 @media(max-width:500px) {
 
@@ -563,7 +637,7 @@ body {
         border-radius: 30px;
     }
 
-    .payment {
+    .payment-sheet {
         padding: 23px;
         border-radius: 30px;
     }
@@ -579,7 +653,9 @@ body {
 <body>
 
 
-<!-- 타이머 -->
+<!-- =========================
+     타이머
+========================= -->
 
 <div class="timer-card">
 
@@ -602,27 +678,31 @@ body {
 
 
 
-<!-- 결제창 -->
+<!-- =========================
+     결제창
+========================= -->
 
 <div
     class="modal"
     id="modal"
 >
 
-    <div class="payment">
+    <div class="payment-sheet">
+
+        <div class="handle"></div>
 
 
         <!-- 결제 정보 -->
 
         <div id="paymentInfo">
 
-            <div class="top">
+            <div class="store-header">
 
-                <div class="logo">
+                <div class="store-name">
                     App Store
                 </div>
 
-                <div class="demo">
+                <div class="demo-label">
                     모의 결제
                 </div>
 
@@ -655,7 +735,7 @@ body {
             </div>
 
 
-            <!-- 계정 -->
+            <!-- 구매 계정 -->
 
             <div class="account">
 
@@ -688,7 +768,7 @@ body {
 
                 </div>
 
-                <div class="check">
+                <div class="selected">
                     ✓
                 </div>
 
@@ -696,7 +776,7 @@ body {
 
 
             <button
-                class="buy"
+                class="buy-button"
                 onclick="authenticate()"
             >
                 ₩100,000 구매
@@ -706,14 +786,16 @@ body {
 
 
 
-        <!-- 인증 -->
+        <!-- =========================
+             인증
+        ========================= -->
 
         <div
-            class="auth"
+            class="auth-screen"
             id="auth"
         >
 
-            <div class="face">
+            <div class="face-circle">
                 ◉
             </div>
 
@@ -729,10 +811,12 @@ body {
 
 
 
-        <!-- 결제 처리 -->
+        <!-- =========================
+             결제 중
+        ========================= -->
 
         <div
-            class="loading"
+            class="loading-screen"
             id="loading"
         >
 
@@ -750,10 +834,12 @@ body {
 
 
 
-        <!-- 완료 -->
+        <!-- =========================
+             완료
+        ========================= -->
 
         <div
-            class="success"
+            class="success-screen"
             id="success"
         >
 
@@ -784,9 +870,11 @@ let timer = null;
 let premium = false;
 
 
-/* 효과음 */
+/* =========================
+   효과음
+========================= */
 
-function sound(type) {
+function playSound(type) {
 
     const AudioContext =
         window.AudioContext ||
@@ -794,7 +882,8 @@ function sound(type) {
 
     if (!AudioContext) return;
 
-    const audio = new AudioContext();
+    const audio =
+        new AudioContext();
 
     const oscillator =
         audio.createOscillator();
@@ -859,18 +948,22 @@ function sound(type) {
 }
 
 
-/* 3초 타이머 */
+/* =========================
+   타이머
+========================= */
 
 function startTimer() {
 
-    if (timer !== null) return;
+    if (timer !== null) {
+        return;
+    }
 
     let count = 3;
 
     document.getElementById("time").textContent =
         "00:0" + count;
 
-    sound("tick");
+    playSound("tick");
 
 
     timer = setInterval(() => {
@@ -882,7 +975,7 @@ function startTimer() {
             document.getElementById("time").textContent =
                 "00:0" + count;
 
-            sound("tick");
+            playSound("tick");
 
         } else {
 
@@ -905,14 +998,16 @@ function startTimer() {
 
                 }
 
-            }, 350);
+            }, 400);
         }
 
     }, 1000);
 }
 
 
-/* 결제창 */
+/* =========================
+   결제창 열기
+========================= */
 
 function openPayment() {
 
@@ -921,7 +1016,9 @@ function openPayment() {
 }
 
 
-/* 인증 */
+/* =========================
+   인증
+========================= */
 
 function authenticate() {
 
@@ -932,6 +1029,8 @@ function authenticate() {
         "block";
 
 
+    /* 가짜 인증 */
+
     setTimeout(() => {
 
         document.getElementById("auth").style.display =
@@ -940,6 +1039,8 @@ function authenticate() {
         document.getElementById("loading").style.display =
             "block";
 
+
+        /* 결제 처리 */
 
         setTimeout(() => {
 
@@ -951,7 +1052,23 @@ function authenticate() {
 
             premium = true;
 
-            sound("success");
+            playSound("success");
+
+
+            /* 완료 화면 3초 */
+
+            setTimeout(() => {
+
+                document.getElementById("modal").style.display =
+                    "none";
+
+                document.getElementById("success").style.display =
+                    "none";
+
+                document.getElementById("paymentInfo").style.display =
+                    "block";
+
+            }, 3000);
 
         }, 2200);
 
