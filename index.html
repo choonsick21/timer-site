@@ -26,21 +26,22 @@ body{
         "SF Pro Display",
         "Pretendard",
         sans-serif;
+
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+
     overflow:hidden;
     -webkit-font-smoothing:antialiased;
 }
 
-button,
-input{
+button,input{
     font-family:inherit;
 }
 
 
 /* =========================
-   메인 타이머
+   메인
 ========================= */
 
 .app{
@@ -83,6 +84,7 @@ button{
     color:#000;
     font-size:16px;
     font-weight:600;
+
     transition:transform .15s ease;
 }
 
@@ -93,10 +95,14 @@ button{
 .secondary{
     padding:15px 20px;
     border-radius:17px;
+
     background:#1c1c1e;
     color:#fff;
+
     border:1px solid #303034;
+
     font-size:15px;
+
     transition:
         transform .15s ease,
         background .15s ease;
@@ -118,12 +124,15 @@ button{
 .settings{
     margin-top:25px;
     padding:17px;
+
     border-radius:20px;
+
     background:#111;
     border:1px solid #252525;
 
     opacity:0;
     transform:translateY(8px);
+
     pointer-events:none;
 
     transition:
@@ -146,11 +155,15 @@ button{
 .time-input{
     width:110px;
     height:44px;
+
     border-radius:12px;
     border:1px solid #3a3a3c;
+
     background:#1c1c1e;
     color:#fff;
+
     outline:none;
+
     text-align:center;
     font-size:16px;
 }
@@ -158,16 +171,20 @@ button{
 .set{
     height:44px;
     margin-left:5px;
+
     padding:0 18px;
+
     border-radius:12px;
+
     background:#fff;
     color:#000;
+
     font-weight:600;
 }
 
 
 /* =========================
-   결제 배경
+   모달
 ========================= */
 
 .modal{
@@ -175,8 +192,8 @@ button{
     inset:0;
 
     display:flex;
-    justify-content:center;
     align-items:flex-end;
+    justify-content:center;
 
     padding:12px;
 
@@ -210,11 +227,6 @@ button{
     position:relative;
 
     width:min(100%,450px);
-
-    /*
-       실제 높이는 자바스크립트가
-       화면 내용에 맞춰 변경
-    */
     height:100px;
 
     overflow:hidden;
@@ -246,7 +258,10 @@ button{
         transform .62s cubic-bezier(.22,1,.36,1),
         opacity .42s ease;
 
-    will-change:height,transform,opacity;
+    will-change:
+        height,
+        transform,
+        opacity;
 }
 
 .modal.open .sheet{
@@ -316,14 +331,17 @@ button{
 .handle{
     width:38px;
     height:5px;
+
     margin:0 auto 21px;
+
     border-radius:20px;
+
     background:#555;
 }
 
 
 /* =========================
-   X
+   X 버튼
 ========================= */
 
 .close{
@@ -341,15 +359,26 @@ button{
     color:#aaa;
 
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
 
     font-size:20px;
 
+    /*
+       마우스가 가까워지면
+       부드럽게 이동
+    */
+
     transition:
-        left .18s ease,
-        top .18s ease,
-        transform .15s ease;
+        left .32s cubic-bezier(.22,1,.36,1),
+        top .32s cubic-bezier(.22,1,.36,1),
+        transform .18s ease;
+
+    z-index:20;
+}
+
+.close:active{
+    transform:scale(.9);
 }
 
 
@@ -385,6 +414,7 @@ button{
 .price{
     text-align:center;
     padding:21px 0;
+
     font-size:40px;
     font-weight:700;
     letter-spacing:-1.5px;
@@ -392,9 +422,11 @@ button{
 
 .billing{
     display:block;
+
     color:#98989d;
     font-size:12px;
     font-weight:400;
+
     margin-top:5px;
 }
 
@@ -416,7 +448,9 @@ button{
 .value{
     font-size:12px;
     text-align:right;
+
     max-width:65%;
+
     overflow:hidden;
     text-overflow:ellipsis;
 }
@@ -433,7 +467,7 @@ button{
 
 
 /* =========================
-   구매 버튼
+   구매
 ========================= */
 
 .buy{
@@ -492,6 +526,7 @@ button{
 
 .password-page p{
     margin:0 0 22px;
+
     color:#98989d;
     font-size:13px;
 }
@@ -548,7 +583,8 @@ button{
     border:3px solid #444;
     border-top-color:#fff;
 
-    animation:spin .8s linear infinite;
+    animation:
+        spin .8s linear infinite;
 }
 
 @keyframes spin{
@@ -564,6 +600,7 @@ button{
 
 .loading-page p{
     margin:0;
+
     color:#98989d;
     font-size:13px;
 }
@@ -603,6 +640,7 @@ button{
 
 .success-page p{
     margin:0;
+
     color:#98989d;
     font-size:13px;
     line-height:1.6;
@@ -610,7 +648,7 @@ button{
 
 
 /* =========================
-   휴대폰
+   모바일
 ========================= */
 
 @media(max-width:500px){
@@ -633,7 +671,7 @@ button{
 
 
 <!-- =========================
-     타이머
+     메인 타이머
 ========================= -->
 
 <div class="app">
@@ -674,8 +712,6 @@ button{
 
     </div>
 
-
-    <!-- 구매 완료 후 사용 가능 -->
 
     <div
         class="settings"
@@ -728,7 +764,6 @@ button{
         <button
             class="close"
             id="closeButton"
-            onmouseenter="escapeClose()"
             onclick="closePayment()"
             aria-label="닫기"
         >
@@ -742,9 +777,7 @@ button{
         >
 
 
-            <!-- =====================
-                 결제
-            ====================== -->
+            <!-- 결제 -->
 
             <div
                 class="page visible"
@@ -752,7 +785,7 @@ button{
             >
 
                 <div class="store">
-                    App Store
+                    Timer
                 </div>
 
 
@@ -763,7 +796,7 @@ button{
                     </div>
 
                     <div class="sub">
-                        앱 내 구입 · 일회성
+                        프리미엄 이용권 · 일회성
                     </div>
 
                 </div>
@@ -809,7 +842,7 @@ button{
                 <div class="benefits">
 
                     <div class="benefit">
-                        ✓ 3초 타이머 무제한 사용
+                        ✓ 타이머 시간 자유 설정
                     </div>
 
                     <div class="benefit">
@@ -830,9 +863,7 @@ button{
 
 
 
-            <!-- =====================
-                 인증
-            ====================== -->
+            <!-- 인증 -->
 
             <div
                 class="page entering"
@@ -875,9 +906,7 @@ button{
 
 
 
-            <!-- =====================
-                 결제 처리
-            ====================== -->
+            <!-- 로딩 -->
 
             <div
                 class="page entering"
@@ -890,7 +919,7 @@ button{
                     <div class="spinner"></div>
 
                     <h2>
-                        결제 처리 중
+                        처리 중
                     </h2>
 
                     <p>
@@ -903,9 +932,7 @@ button{
 
 
 
-            <!-- =====================
-                 완료
-            ====================== -->
+            <!-- 완료 -->
 
             <div
                 class="page entering"
@@ -925,7 +952,7 @@ button{
 
                     <p>
                         프리미엄 이용권이 활성화되었습니다.<br>
-                        이제 타이머를 자유롭게 사용할 수 있습니다.
+                        이제 타이머 시간을 자유롭게 설정할 수 있습니다.
                     </p>
 
                 </div>
@@ -942,9 +969,9 @@ button{
 
 <script>
 
-/* ========================================
-   변수
-======================================== */
+/* =========================
+   타이머
+========================= */
 
 let running = false;
 let timer = null;
@@ -956,10 +983,6 @@ let endTime = 0;
 
 let premium = false;
 
-
-/* ========================================
-   시간 표시
-======================================== */
 
 function updateDisplay(){
 
@@ -976,10 +999,6 @@ function updateDisplay(){
         String(seconds).padStart(2,"0");
 }
 
-
-/* ========================================
-   타이머
-======================================== */
 
 function tick(){
 
@@ -1028,10 +1047,6 @@ function tick(){
 }
 
 
-/* ========================================
-   시작
-======================================== */
-
 function startTimer(){
 
     if(running){
@@ -1052,10 +1067,6 @@ function startTimer(){
     tick();
 }
 
-
-/* ========================================
-   일시정지
-======================================== */
 
 function pauseTimer(){
 
@@ -1085,10 +1096,6 @@ function pauseTimer(){
 }
 
 
-/* ========================================
-   초기화
-======================================== */
-
 function resetTimer(){
 
     pauseTimer();
@@ -1100,9 +1107,9 @@ function resetTimer(){
 }
 
 
-/* ========================================
+/* =========================
    시간 설정
-======================================== */
+========================= */
 
 function setTime(){
 
@@ -1131,17 +1138,14 @@ function setTime(){
 }
 
 
-/* ========================================
-   결제창 열기
-======================================== */
+/* =========================
+   결제창
+========================= */
 
 function openPayment(){
 
     const modal =
         document.getElementById("modal");
-
-    const sheet =
-        document.getElementById("sheet");
 
     const payment =
         document.getElementById("paymentPage");
@@ -1151,33 +1155,27 @@ function openPayment(){
     modal.style.visibility = "visible";
 
     requestAnimationFrame(() => {
-
         modal.classList.add("open");
-
     });
 }
 
 
-/* ========================================
-   결제창 높이 계산
-
-   이 부분이 핵심.
-   현재 화면 내용에 맞춰서
-   바깥 창 높이를 바꿈.
-======================================== */
+/* =========================
+   창 높이
+========================= */
 
 function resizeSheet(page){
 
     const sheet =
         document.getElementById("sheet");
 
-    const previousDisplay =
+    const oldDisplay =
         page.style.display;
 
-    const previousPosition =
+    const oldPosition =
         page.style.position;
 
-    const previousVisibility =
+    const oldVisibility =
         page.style.visibility;
 
     page.style.display = "block";
@@ -1188,19 +1186,15 @@ function resizeSheet(page){
         page.offsetHeight;
 
     page.style.position =
-        previousPosition;
+        oldPosition;
 
     page.style.visibility =
-        previousVisibility;
+        oldVisibility;
 
-    if(previousDisplay){
+    if(oldDisplay){
         page.style.display =
-            previousDisplay;
+            oldDisplay;
     }
-
-    /*
-       상단 손잡이 + 위아래 여백
-    */
 
     const totalHeight =
         pageHeight + 72;
@@ -1210,16 +1204,11 @@ function resizeSheet(page){
 }
 
 
-/* ========================================
-   페이지 전환
-======================================== */
+/* =========================
+   화면 전환
+========================= */
 
 function changePage(from,to){
-
-    /*
-       다음 페이지를 먼저 표시해서
-       높이를 정확하게 측정
-    */
 
     to.style.display = "block";
 
@@ -1231,24 +1220,19 @@ function changePage(from,to){
     to.classList.add("entering");
 
     /*
-       다음 화면 크기로
-       바깥 창을 부드럽게 변경
+       다음 화면에 맞춰
+       창 높이도 같이 움직임
     */
 
     resizeSheet(to);
 
-
-    /*
-       현재 화면 퇴장
-    */
-
     from.classList.remove("visible");
     from.classList.add("leaving");
-
 
     setTimeout(() => {
 
         from.style.display = "none";
+
         from.classList.remove("leaving");
 
         requestAnimationFrame(() => {
@@ -1262,9 +1246,9 @@ function changePage(from,to){
 }
 
 
-/* ========================================
-   구매 버튼
-======================================== */
+/* =========================
+   구매
+========================= */
 
 function showPassword(){
 
@@ -1293,9 +1277,9 @@ function showPassword(){
 }
 
 
-/* ========================================
+/* =========================
    인증
-======================================== */
+========================= */
 
 function confirmPassword(){
 
@@ -1304,15 +1288,9 @@ function confirmPassword(){
         .getElementById("password")
         .value;
 
-    /*
-       화면 연출용이므로
-       아무 문자나 입력하면 진행
-    */
-
     if(password.length === 0){
         return;
     }
-
 
     const passwordPage =
         document.getElementById(
@@ -1329,10 +1307,6 @@ function confirmPassword(){
         loadingPage
     );
 
-
-    /*
-       결제 처리 연출
-    */
 
     setTimeout(() => {
 
@@ -1351,33 +1325,24 @@ function confirmPassword(){
             success
         );
 
-
         premium = true;
-
 
         document
             .getElementById("settings")
             .classList.add("show");
 
 
-        /*
-           완료 화면을
-           잠시 보여줌
-        */
-
         setTimeout(() => {
-
             closePayment();
-
         },3500);
 
     },2200);
 }
 
 
-/* ========================================
-   결제창 닫기
-======================================== */
+/* =========================
+   닫기
+========================= */
 
 function closePayment(){
 
@@ -1400,9 +1365,9 @@ function closePayment(){
 }
 
 
-/* ========================================
-   화면 초기화
-======================================== */
+/* =========================
+   페이지 초기화
+========================= */
 
 function resetPages(){
 
@@ -1456,7 +1421,7 @@ function resetPages(){
 
 
     /*
-       X 버튼 위치 초기화
+       X 위치 원상복구
     */
 
     const close =
@@ -1464,106 +1429,164 @@ function resetPages(){
             "closeButton"
         );
 
-    close.style.position = "";
+    close.style.position = "absolute";
     close.style.left = "";
     close.style.top = "";
 
+    close.style.right = "18px";
+    close.style.transform = "";
+
 
     setTimeout(() => {
-
         resizeSheet(payment);
-
     },20);
 }
 
 
-/* ========================================
-   X 버튼 살짝 도망가기
+/* =========================
+   X 버튼 도망
 
-   너무 멀리 안 감.
-   약 15~20px만 이동.
-======================================== */
+   마우스가 가까워질수록
+   반대 방향으로 조금 이동
+========================= */
 
-function escapeClose(){
+const closeButton =
+    document.getElementById(
+        "closeButton"
+    );
 
-    const button =
-        document.getElementById(
-            "closeButton"
-        );
+const sheet =
+    document.getElementById(
+        "sheet"
+    );
 
-    const sheet =
-        document.getElementById(
-            "sheet"
-        );
-
-
-    const currentLeft =
-        button.offsetLeft;
-
-    const currentTop =
-        button.offsetTop;
+const modal =
+    document.getElementById(
+        "modal"
+    );
 
 
-    const moveX =
-        Math.random() > .5
-        ? 18
-        : -18;
+document.addEventListener(
+    "mousemove",
+    function(event){
 
-    const moveY =
-        Math.random() > .5
-        ? 12
-        : -12;
+        if(!modal.classList.contains("open")){
+            return;
+        }
 
 
-    let newX =
-        currentLeft + moveX;
-
-    let newY =
-        currentTop + moveY;
+        const rect =
+            closeButton.getBoundingClientRect();
 
 
-    /*
-       결제창 밖으로 나가지 않게
-    */
+        const centerX =
+            rect.left +
+            rect.width / 2;
 
-    newX =
-        Math.max(
-            8,
-            Math.min(
-                newX,
-                sheet.clientWidth -
-                button.offsetWidth -
-                8
-            )
-        );
+        const centerY =
+            rect.top +
+            rect.height / 2;
 
 
-    newY =
-        Math.max(
-            8,
-            Math.min(
-                newY,
-                sheet.clientHeight -
-                button.offsetHeight -
-                8
-            )
-        );
+        const dx =
+            centerX -
+            event.clientX;
+
+        const dy =
+            centerY -
+            event.clientY;
 
 
-    button.style.position =
-        "absolute";
-
-    button.style.left =
-        newX + "px";
-
-    button.style.top =
-        newY + "px";
-}
+        const distance =
+            Math.sqrt(
+                dx * dx +
+                dy * dy
+            );
 
 
-/* ========================================
-   엔터키로 인증
-======================================== */
+        /*
+           70px 안으로 접근하면
+           살짝 도망
+        */
+
+        if(distance < 70){
+
+            const length =
+                Math.sqrt(
+                    dx * dx +
+                    dy * dy
+                ) || 1;
+
+
+            /*
+               너무 멀리 안 도망가도록
+               22px 정도만 이동
+            */
+
+            const move =
+                22;
+
+
+            let newX =
+                closeButton.offsetLeft +
+                (dx / length) *
+                move;
+
+
+            let newY =
+                closeButton.offsetTop +
+                (dy / length) *
+                move;
+
+
+            /*
+               창 내부 제한
+            */
+
+            newX =
+                Math.max(
+                    8,
+                    Math.min(
+                        newX,
+                        sheet.clientWidth -
+                        closeButton.offsetWidth -
+                        8
+                    )
+                );
+
+
+            newY =
+                Math.max(
+                    8,
+                    Math.min(
+                        newY,
+                        sheet.clientHeight -
+                        closeButton.offsetHeight -
+                        8
+                    )
+                );
+
+
+            closeButton.style.position =
+                "absolute";
+
+            closeButton.style.left =
+                newX + "px";
+
+            closeButton.style.top =
+                newY + "px";
+
+            closeButton.style.right =
+                "auto";
+        }
+
+    }
+);
+
+
+/* =========================
+   인증 엔터
+========================= */
 
 document
 .getElementById("password")
@@ -1579,9 +1602,9 @@ document
 );
 
 
-/* ========================================
+/* =========================
    시작
-======================================== */
+========================= */
 
 updateDisplay();
 
