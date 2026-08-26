@@ -3,232 +3,438 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Timer</title>
 
 <style>
-*{box-sizing:border-box}
 
-html,body{
-    margin:0;
-    width:100%;
-    height:100%;
+/* =========================
+   기본
+========================= */
+
+* {
+    box-sizing: border-box;
 }
 
-body{
-    background:#000;
-    color:#fff;
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",
-    "Pretendard","Segoe UI",sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 
-/* 메인 */
+body {
 
-.app{
-    width:min(90vw,520px);
-    text-align:center;
-}
+    background: #000;
 
-.title{
-    font-size:30px;
-    font-weight:700;
-    letter-spacing:-1px;
-    margin-bottom:30px;
-}
+    color: #fff;
 
-.time{
-    font-size:clamp(72px,18vw,105px);
-    font-weight:700;
-    letter-spacing:-6px;
-    font-variant-numeric:tabular-nums;
-    margin-bottom:28px;
-    transition:transform .18s ease;
-}
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Pretendard",
+        "Segoe UI",
+        sans-serif;
 
-.time.pop{
-    transform:scale(1.035);
-}
+    display: flex;
 
-.controls{
-    display:flex;
-    justify-content:center;
-    gap:9px;
-    flex-wrap:wrap;
-}
+    align-items: center;
+    justify-content: center;
 
-button{
-    font-family:inherit;
-    border:0;
-    cursor:pointer;
-}
+    overflow: hidden;
 
-.primary{
-    background:#fff;
-    color:#000;
-    padding:15px 28px;
-    border-radius:17px;
-    font-size:16px;
-    font-weight:600;
-    transition:transform .18s ease;
-}
-
-.primary:hover{
-    transform:scale(1.035);
-}
-
-.primary:active{
-    transform:scale(.96);
-}
-
-.secondary{
-    background:#1c1c1e;
-    color:#fff;
-    border:1px solid #303034;
-    padding:15px 20px;
-    border-radius:17px;
-    font-size:15px;
-}
-
-.settings{
-    margin-top:24px;
-    padding:16px;
-    border-radius:20px;
-    background:#111;
-    border:1px solid #222;
-    opacity:0;
-    transform:translateY(8px);
-    pointer-events:none;
-    transition:opacity .3s ease,transform .3s ease;
-}
-
-.settings.show{
-    opacity:1;
-    transform:translateY(0);
-    pointer-events:auto;
-}
-
-.settings-title{
-    color:#999;
-    font-size:12px;
-    margin-bottom:10px;
-}
-
-input{
-    outline:none;
-    font-family:inherit;
-}
-
-.time-input{
-    width:110px;
-    height:44px;
-    border-radius:12px;
-    border:1px solid #3a3a3c;
-    background:#1c1c1e;
-    color:#fff;
-    text-align:center;
-    font-size:16px;
-    padding:0 10px;
-}
-
-.set{
-    height:44px;
-    padding:0 17px;
-    margin-left:5px;
-    border-radius:12px;
-    background:#fff;
-    color:#000;
-    font-weight:600;
+    -webkit-font-smoothing: antialiased;
 }
 
 
-/* 결제 배경 */
+/* =========================
+   메인
+========================= */
 
-.modal{
-    position:fixed;
-    inset:0;
-    display:flex;
-    align-items:flex-end;
-    justify-content:center;
-    padding:12px;
-    background:rgba(0,0,0,0);
-    backdrop-filter:blur(0);
-    -webkit-backdrop-filter:blur(0);
-    pointer-events:none;
-    opacity:0;
+.app {
+
+    width: min(90vw, 520px);
+
+    text-align: center;
+}
+
+.title {
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 32px;
+}
+
+.time {
+
+    font-size: clamp(75px, 18vw, 105px);
+
+    font-weight: 700;
+
+    letter-spacing: -6px;
+
+    font-variant-numeric: tabular-nums;
+
+    line-height: 1;
+
+    margin-bottom: 32px;
+
+    user-select: none;
+
     transition:
-        opacity .35s ease,
-        background .35s ease,
-        backdrop-filter .35s ease;
-    z-index:10;
+        transform .2s ease;
 }
 
-.modal.open{
-    opacity:1;
-    background:rgba(0,0,0,.62);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    pointer-events:auto;
+.time.pop {
+
+    transform: scale(1.025);
 }
 
 
-/* 결제 시트 */
+/* =========================
+   버튼
+========================= */
 
-.sheet{
-    position:relative;
-    width:min(100%,450px);
-    max-height:94vh;
-    overflow:auto;
-    padding:23px;
-    border-radius:30px;
-    background:#1c1c1e;
-    border:1px solid #38383a;
-    box-shadow:0 -20px 70px rgba(0,0,0,.5);
+.controls {
 
-    transform:translateY(45px) scale(.98);
-    opacity:0;
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+button {
+
+    font-family: inherit;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.primary {
+
+    padding: 15px 28px;
+
+    border-radius: 17px;
+
+    background: #fff;
+
+    color: #000;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
     transition:
-        transform .42s cubic-bezier(.22,.8,.22,1),
-        opacity .3s ease;
+        transform .18s ease,
+        opacity .18s ease;
 }
 
-.modal.open .sheet{
-    transform:translateY(0) scale(1);
-    opacity:1;
+.primary:hover {
+
+    transform: scale(1.035);
 }
 
-.handle{
-    width:38px;
-    height:5px;
-    background:#555;
-    border-radius:10px;
-    margin:0 auto 20px;
+.primary:active {
+
+    transform: scale(.96);
+}
+
+.secondary {
+
+    padding: 15px 20px;
+
+    border-radius: 17px;
+
+    background: #1c1c1e;
+
+    color: #fff;
+
+    border: 1px solid #303034;
+
+    font-size: 15px;
+
+    transition:
+        background .2s ease,
+        transform .18s ease;
+}
+
+.secondary:hover {
+
+    background: #29292b;
+}
+
+.secondary:active {
+
+    transform: scale(.96);
 }
 
 
-/* X */
+/* =========================
+   설정
+========================= */
 
-.close{
-    position:absolute;
-    top:19px;
-    right:19px;
+.settings {
 
-    width:32px;
-    height:32px;
+    margin-top: 25px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    padding: 17px;
 
-    border-radius:50%;
+    border-radius: 21px;
 
-    background:#303034;
-    color:#aaa;
+    background: rgba(255,255,255,.055);
 
-    font-size:20px;
-    line-height:1;
+    border: 1px solid rgba(255,255,255,.08);
+
+    opacity: 0;
+
+    transform: translateY(8px);
+
+    pointer-events: none;
+
+    transition:
+        opacity .4s ease,
+        transform .4s ease;
+}
+
+.settings.show {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+    pointer-events: auto;
+}
+
+.settings-title {
+
+    color: #98989d;
+
+    font-size: 12px;
+
+    margin-bottom: 10px;
+}
+
+.time-input {
+
+    width: 110px;
+
+    height: 45px;
+
+    border-radius: 13px;
+
+    border: 1px solid #3a3a3c;
+
+    background: #1c1c1e;
+
+    color: #fff;
+
+    outline: none;
+
+    text-align: center;
+
+    font-size: 16px;
+
+    padding: 0 10px;
+}
+
+.set {
+
+    height: 45px;
+
+    margin-left: 5px;
+
+    padding: 0 18px;
+
+    border-radius: 13px;
+
+    background: #fff;
+
+    color: #000;
+
+    font-weight: 600;
+
+    transition: transform .18s ease;
+}
+
+.set:active {
+
+    transform: scale(.95);
+}
+
+
+/* =========================
+   결제 배경
+========================= */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    padding: 12px;
+
+    background: rgba(0,0,0,0);
+
+    backdrop-filter: blur(0);
+
+    -webkit-backdrop-filter: blur(0);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity .42s ease,
+        background .42s ease,
+        backdrop-filter .42s ease,
+        -webkit-backdrop-filter .42s ease;
+
+    z-index: 100;
+}
+
+.modal.open {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    background: rgba(0,0,0,.64);
+
+    backdrop-filter: blur(20px);
+
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* =========================
+   결제창
+========================= */
+
+.sheet {
+
+    position: relative;
+
+    width: min(100%, 450px);
+
+    max-height: 94vh;
+
+    overflow-y: auto;
+
+    padding: 23px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(40,40,42,.98),
+            rgba(25,25,27,.98)
+        );
+
+    border: 1px solid rgba(255,255,255,.11);
+
+    box-shadow:
+        0 -25px 90px rgba(0,0,0,.55);
+
+    transform:
+        translate3d(0,80px,0)
+        scale(.985);
+
+    opacity: 0;
+
+    transition:
+        transform .55s cubic-bezier(.22,.8,.22,1),
+        opacity .4s ease;
+
+    will-change: transform, opacity;
+}
+
+.modal.open .sheet {
+
+    transform:
+        translate3d(0,0,0)
+        scale(1);
+
+    opacity: 1;
+}
+
+.modal.closing .sheet {
+
+    transform:
+        translate3d(0,80px,0)
+        scale(.985);
+
+    opacity: 0;
+}
+
+
+/* 손잡이 */
+
+.handle {
+
+    width: 38px;
+
+    height: 5px;
+
+    margin: 0 auto 21px;
+
+    border-radius: 20px;
+
+    background: #555;
+}
+
+
+/* =========================
+   X
+========================= */
+
+.close {
+
+    position: absolute;
+
+    top: 18px;
+
+    right: 18px;
+
+    width: 32px;
+
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #303034;
+
+    color: #aaa;
+
+    font-size: 20px;
+
+    line-height: 1;
 
     transition:
         left .18s ease,
@@ -236,241 +442,452 @@ input{
         transform .18s ease;
 }
 
-.close:hover{
-    transform:scale(1.05);
+.close:hover {
+
+    transform: scale(1.05);
 }
 
 
-/* 결제 내용 */
+/* =========================
+   결제 정보
+========================= */
 
-.store{
-    text-align:center;
-    font-size:17px;
-    font-weight:600;
-    margin-bottom:22px;
+.store {
+
+    text-align: center;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    margin-bottom: 23px;
 }
 
-.product{
-    text-align:center;
-    padding-bottom:20px;
-    border-bottom:1px solid #38383a;
+.product {
+
+    text-align: center;
+
+    padding-bottom: 21px;
+
+    border-bottom:
+        1px solid #38383a;
 }
 
-.product-name{
-    font-size:24px;
-    font-weight:700;
-    letter-spacing:-.7px;
+.product-name {
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    letter-spacing: -.7px;
 }
 
-.sub{
-    color:#98989d;
-    font-size:13px;
-    margin-top:7px;
-}
+.sub {
 
-.price{
-    text-align:center;
-    font-size:40px;
-    font-weight:700;
-    letter-spacing:-1.5px;
-    padding:21px 0;
-}
+    color: #98989d;
 
-.billing{
-    display:block;
-    color:#98989d;
-    font-size:12px;
-    font-weight:400;
-    margin-top:5px;
-}
+    font-size: 13px;
 
-.info{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 0;
-    border-bottom:1px solid #38383a;
-}
-
-.label{
-    color:#98989d;
-    font-size:13px;
-}
-
-.value{
-    font-size:12px;
-}
-
-.benefits{
-    padding:15px 0;
-    border-bottom:1px solid #38383a;
-}
-
-.benefit{
-    font-size:13px;
-    margin:8px 0;
-}
-
-.buy{
-    width:100%;
-    height:54px;
-    margin-top:19px;
-    border-radius:15px;
-    background:#fff;
-    color:#000;
-    font-size:16px;
-    font-weight:600;
-    transition:transform .18s ease;
-}
-
-.buy:active{
-    transform:scale(.97);
+    margin-top: 7px;
 }
 
 
-/* 인증 */
+/* 가격 */
 
-.password-screen,
-.loading,
-.success{
-    display:none;
-    text-align:center;
+.price {
+
+    text-align: center;
+
+    padding: 21px 0;
+
+    font-size: 40px;
+
+    font-weight: 700;
+
+    letter-spacing: -1.5px;
 }
 
-.password-screen{
-    padding:15px 4px 4px;
-}
+.billing {
 
-.icon{
-    font-size:38px;
-    margin-bottom:15px;
-}
+    display: block;
 
-.password-screen h2,
-.loading h2,
-.success h2{
-    margin:0 0 8px;
-    font-size:22px;
-}
+    margin-top: 5px;
 
-.password-screen p,
-.loading p,
-.success p{
-    color:#98989d;
-    font-size:13px;
-    line-height:1.6;
-    margin:0 0 20px;
-}
+    color: #98989d;
 
-.password{
-    width:100%;
-    height:50px;
-    border-radius:13px;
-    border:1px solid #444;
-    background:#2c2c2e;
-    color:#fff;
-    text-align:center;
-    font-size:16px;
-    padding:0 15px;
-}
+    font-size: 12px;
 
-.confirm{
-    width:100%;
-    height:52px;
-    margin-top:12px;
-    border-radius:14px;
-    background:#fff;
-    color:#000;
-    font-weight:600;
+    font-weight: 400;
 }
 
 
-/* 로딩 */
+/* 정보 */
 
-.loading{
-    padding:35px 4px;
+.info {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 15px 0;
+
+    border-bottom:
+        1px solid #38383a;
 }
 
-.spinner{
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    border:3px solid #444;
-    border-top-color:#fff;
-    margin:0 auto 19px;
-    animation:spin .8s linear infinite;
+.label {
+
+    color: #98989d;
+
+    font-size: 13px;
 }
 
-@keyframes spin{
-    to{transform:rotate(360deg)}
-}
+.value {
 
+    font-size: 12px;
 
-/* 완료 */
+    max-width: 65%;
 
-.success{
-    padding:30px 4px;
-}
+    text-align: right;
 
-.check{
-    width:68px;
-    height:68px;
-    margin:0 auto 19px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:#fff;
-    color:#000;
-    font-size:34px;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
 }
 
 
-/* 모바일 */
+/* 혜택 */
 
-@media(max-width:500px){
-    .sheet{
-        padding:21px;
-        border-radius:28px;
+.benefits {
+
+    padding: 15px 0;
+
+    border-bottom:
+        1px solid #38383a;
+}
+
+.benefit {
+
+    margin: 8px 0;
+
+    font-size: 13px;
+}
+
+
+/* 구매 */
+
+.buy {
+
+    width: 100%;
+
+    height: 54px;
+
+    margin-top: 19px;
+
+    border-radius: 15px;
+
+    background: #fff;
+
+    color: #000;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition:
+        transform .18s ease;
+}
+
+.buy:active {
+
+    transform: scale(.97);
+}
+
+
+/* =========================
+   인증
+========================= */
+
+.password-screen {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 17px 4px 4px;
+}
+
+.icon {
+
+    font-size: 38px;
+
+    margin-bottom: 15px;
+}
+
+.password-screen h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 22px;
+}
+
+.password-screen p {
+
+    margin: 0 0 20px;
+
+    color: #98989d;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+.password {
+
+    width: 100%;
+
+    height: 50px;
+
+    padding: 0 15px;
+
+    border-radius: 13px;
+
+    border:
+        1px solid #444;
+
+    background: #2c2c2e;
+
+    color: #fff;
+
+    outline: none;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+.password:focus {
+
+    border-color: #777;
+}
+
+.confirm {
+
+    width: 100%;
+
+    height: 52px;
+
+    margin-top: 12px;
+
+    border-radius: 14px;
+
+    background: #fff;
+
+    color: #000;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   로딩
+========================= */
+
+.loading {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 37px 4px;
+}
+
+.spinner {
+
+    width: 35px;
+
+    height: 35px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    border:
+        3px solid #444;
+
+    border-top-color: #fff;
+
+    animation:
+        spin .8s linear infinite;
+}
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 21px;
+}
+
+.loading p {
+
+    margin: 0;
+
+    color: #98989d;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   완료
+========================= */
+
+.success {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 30px 4px;
+}
+
+.check {
+
+    width: 68px;
+
+    height: 68px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    color: #000;
+
+    font-size: 34px;
+}
+
+.success h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 23px;
+}
+
+.success p {
+
+    margin: 0;
+
+    color: #98989d;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   모바일
+========================= */
+
+@media(max-width:500px) {
+
+    .sheet {
+
+        padding: 21px;
+
+        border-radius: 28px;
     }
 
-    .price{
-        font-size:37px;
+    .price {
+
+        font-size: 37px;
+    }
+
+    .close {
+
+        top: 17px;
+
+        right: 17px;
     }
 }
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     타이머
+========================= -->
 
 <div class="app">
 
-    <div class="title">Timer</div>
+    <div class="title">
+        Timer
+    </div>
 
-    <div class="time" id="time">00:03</div>
+    <div
+        class="time"
+        id="time"
+    >
+        00:03
+    </div>
+
 
     <div class="controls">
 
-        <button class="primary" onclick="startTimer()">
+        <button
+            class="primary"
+            onclick="startTimer()"
+        >
             시작
         </button>
 
-        <button class="secondary" onclick="pauseTimer()">
+        <button
+            class="secondary"
+            onclick="pauseTimer()"
+        >
             일시정지
         </button>
 
-        <button class="secondary" onclick="resetTimer()">
+        <button
+            class="secondary"
+            onclick="resetTimer()"
+        >
             초기화
         </button>
 
     </div>
 
-    <!-- 결제 후에만 나타남 -->
 
-    <div class="settings" id="settings">
+    <!-- 결제 후에만 표시 -->
+
+    <div
+        class="settings"
+        id="settings"
+    >
 
         <div class="settings-title">
-            타이머 시간
+            타이머 시간 설정
         </div>
 
         <input
@@ -482,7 +899,10 @@ input{
             value="3"
         >
 
-        <button class="set" onclick="setTime()">
+        <button
+            class="set"
+            onclick="setTime()"
+        >
             설정
         </button>
 
@@ -491,15 +911,26 @@ input{
 </div>
 
 
-<!-- 결제창 -->
 
-<div class="modal" id="modal">
+<!-- =========================
+     결제창
+========================= -->
 
-    <div class="sheet" id="sheet">
+<div
+    class="modal"
+    id="modal"
+>
+
+    <div
+        class="sheet"
+        id="sheet"
+    >
 
         <div class="handle"></div>
 
-        <!-- X 버튼 -->
+
+        <!-- X -->
+
         <button
             class="close"
             id="closeButton"
@@ -518,6 +949,7 @@ input{
                 App Store
             </div>
 
+
             <div class="product">
 
                 <div class="product-name">
@@ -530,6 +962,7 @@ input{
 
             </div>
 
+
             <div class="price">
 
                 ₩100,000
@@ -539,6 +972,7 @@ input{
                 </span>
 
             </div>
+
 
             <div class="info">
 
@@ -552,6 +986,7 @@ input{
 
             </div>
 
+
             <div class="info">
 
                 <div class="label">
@@ -563,6 +998,7 @@ input{
                 </div>
 
             </div>
+
 
             <div class="benefits">
 
@@ -576,6 +1012,7 @@ input{
 
             </div>
 
+
             <button
                 class="buy"
                 onclick="showPassword()"
@@ -586,14 +1023,19 @@ input{
         </div>
 
 
-        <!-- 암호 -->
+
+        <!-- =========================
+             암호
+        ========================= -->
 
         <div
             class="password-screen"
             id="passwordScreen"
         >
 
-            <div class="icon">🔒</div>
+            <div class="icon">
+                🔒
+            </div>
 
             <h2>
                 구매 인증
@@ -621,7 +1063,10 @@ input{
         </div>
 
 
-        <!-- 결제 처리 -->
+
+        <!-- =========================
+             결제 처리
+        ========================= -->
 
         <div
             class="loading"
@@ -641,7 +1086,10 @@ input{
         </div>
 
 
-        <!-- 완료 -->
+
+        <!-- =========================
+             구매 완료
+        ========================= -->
 
         <div
             class="success"
@@ -664,32 +1112,43 @@ input{
         </div>
 
     </div>
+
 </div>
 
 
+
 <!--
-나중에 같은 폴더에 yarson.mp3를 넣으면
-아래 주석을 풀고 연결할 수 있음.
+나중에 같은 폴더에
+yarson.mp3
+파일을 넣으면 아래를 사용할 수 있음.
 
 <audio id="yarson" src="yarson.mp3"></audio>
 -->
 
 
+
 <script>
 
-let timer = null;
-let lastFrame = null;
+/* =========================
+   상태
+========================= */
 
-let defaultSeconds = 3;
+let timer = null;
+
+let lastTime = null;
+
 let remaining = 3;
 
+let defaultSeconds = 3;
+
 let running = false;
+
 let premium = false;
 
 
-/* -------------------------
+/* =========================
    시간 표시
-------------------------- */
+========================= */
 
 function updateDisplay(){
 
@@ -699,36 +1158,46 @@ function updateDisplay(){
     const seconds =
         Math.floor(remaining % 60);
 
+
     document.getElementById("time").textContent =
+
         String(minutes).padStart(2,"0")
+
         + ":"
+
         + String(seconds).padStart(2,"0");
 }
 
 
-/* -------------------------
-   부드러운 타이머
-------------------------- */
+/* =========================
+   타이머
+========================= */
 
 function tick(now){
 
     if(!running) return;
 
-    if(!lastFrame){
-        lastFrame = now;
+
+    if(lastTime === null){
+
+        lastTime = now;
     }
 
+
     const elapsed =
-        (now - lastFrame) / 1000;
+        (now - lastTime) / 1000;
+
 
     if(elapsed >= 1){
 
-        const steps =
+        const passed =
             Math.floor(elapsed);
 
-        remaining -= steps;
 
-        lastFrame += steps * 1000;
+        remaining -= passed;
+
+        lastTime += passed * 1000;
+
 
         if(remaining <= 0){
 
@@ -737,57 +1206,78 @@ function tick(now){
             updateDisplay();
 
             running = false;
-            lastFrame = null;
+
+            lastTime = null;
 
             timer = null;
 
-            if(premium){
 
-                remaining = defaultSeconds;
+            /* 결제 전 */
 
-                updateDisplay();
+            if(!premium){
 
-            }else{
+                setTimeout(() => {
 
-                setTimeout(openPayment,250);
+                    openPayment();
+
+                },350);
+
+                return;
             }
+
+
+            /* 결제 후 */
+
+            remaining =
+                defaultSeconds;
+
+            updateDisplay();
 
             return;
         }
 
+
         updateDisplay();
     }
+
 
     timer =
         requestAnimationFrame(tick);
 }
 
 
-/* -------------------------
+/* =========================
    시작
-------------------------- */
+========================= */
 
 function startTimer(){
 
     if(running) return;
 
+
     running = true;
-    lastFrame = null;
+
+    lastTime = null;
+
 
     timer =
         requestAnimationFrame(tick);
 }
 
 
-/* -------------------------
+/* =========================
    일시정지
-------------------------- */
+========================= */
 
 function pauseTimer(){
 
     if(!running) return;
 
+
     running = false;
+
+    lastTime = null;
+
 
     if(timer !== null){
 
@@ -795,64 +1285,101 @@ function pauseTimer(){
 
         timer = null;
     }
-
-    lastFrame = null;
 }
 
 
-/* -------------------------
+/* =========================
    초기화
-------------------------- */
+========================= */
 
 function resetTimer(){
 
     pauseTimer();
 
-    remaining = defaultSeconds;
+
+    remaining =
+        defaultSeconds;
+
 
     updateDisplay();
 }
 
 
-/* -------------------------
+/* =========================
    시간 설정
-   결제 후에만 가능
-------------------------- */
+========================= */
 
 function setTime(){
 
+    /* 결제 전에는 사용 불가 */
+
     if(!premium) return;
+
 
     let value =
         Number(
-            document.getElementById("timeInput").value
+            document
+            .getElementById("timeInput")
+            .value
         );
 
-    if(!value || value < 1) return;
+
+    if(!value || value < 1){
+
+        return;
+    }
+
 
     value =
         Math.min(value,9999);
 
-    defaultSeconds = value;
+
+    defaultSeconds =
+        value;
+
+
+    remaining =
+        value;
+
 
     resetTimer();
 }
 
 
-/* -------------------------
-   결제창
-------------------------- */
+/* =========================
+   결제창 열기
+========================= */
 
 function openPayment(){
 
-    document.getElementById("modal")
-        .classList.add("open");
+    const modal =
+        document.getElementById("modal");
+
+
+    modal.classList.remove("closing");
+
+
+    /*
+       두 프레임을 기다려서
+       브라우저가 자연스럽게 애니메이션을
+       시작하도록 함
+    */
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            modal.classList.add("open");
+
+        });
+
+    });
 }
 
 
-/* -------------------------
+/* =========================
    X 도망
-------------------------- */
+========================= */
 
 function escapeClose(){
 
@@ -862,105 +1389,145 @@ function escapeClose(){
     const sheet =
         document.getElementById("sheet");
 
-    const rect =
-        sheet.getBoundingClientRect();
 
-    const maxX =
-        Math.max(0,rect.width - 55);
+    const width =
+        sheet.clientWidth;
 
-    const maxY =
-        Math.max(0,rect.height - 55);
+    const height =
+        sheet.clientHeight;
+
 
     const x =
-        Math.random() * maxX;
+        Math.random() *
+        Math.max(20,width - 65);
+
 
     const y =
-        Math.random() * maxY;
+        Math.random() *
+        Math.max(20,height - 65);
 
-    button.style.position = "absolute";
 
-    button.style.left = x + "px";
-    button.style.top = y + "px";
+    button.style.position =
+        "absolute";
+
+    button.style.left =
+        x + "px";
+
+    button.style.top =
+        y + "px";
 }
 
 
-/* -------------------------
+/* =========================
    결제 취소
-------------------------- */
+========================= */
 
 function cancelPayment(){
 
     /*
-      나중에 yarson.mp3를 넣으면
-      여기에서 재생하도록 연결 가능.
+       나중에 yarson.mp3를 추가하면
+       아래 부분을 사용할 수 있음.
 
-      const sound =
-          document.getElementById("yarson");
+       const sound =
+           document.getElementById("yarson");
 
-      sound.currentTime = 0;
-      sound.play();
+       sound.currentTime = 0;
+       sound.play();
     */
+
 
     closePayment();
 }
 
 
-/* -------------------------
+/* =========================
    결제창 닫기
-------------------------- */
+========================= */
 
 function closePayment(){
 
-    document.getElementById("modal")
-        .classList.remove("open");
+    const modal =
+        document.getElementById("modal");
 
-    setTimeout(resetPaymentScreen,400);
+
+    modal.classList.remove("open");
+
+    modal.classList.add("closing");
+
+
+    setTimeout(() => {
+
+        modal.classList.remove("closing");
+
+        resetPayment();
+
+    },550);
 }
 
 
-/* -------------------------
+/* =========================
    결제 화면 초기화
-------------------------- */
+========================= */
 
-function resetPaymentScreen(){
+function resetPayment(){
 
     document.getElementById("paymentInfo")
-        .style.display = "block";
+        .style.display =
+        "block";
+
 
     document.getElementById("passwordScreen")
-        .style.display = "none";
+        .style.display =
+        "none";
+
 
     document.getElementById("loading")
-        .style.display = "none";
+        .style.display =
+        "none";
+
 
     document.getElementById("success")
-        .style.display = "none";
+        .style.display =
+        "none";
+
 
     document.getElementById("password")
-        .value = "";
+        .value =
+        "";
+
 
     const button =
         document.getElementById("closeButton");
 
-    button.style.position = "";
-    button.style.left = "";
-    button.style.top = "";
+
+    button.style.position =
+        "";
+
+    button.style.left =
+        "";
+
+    button.style.top =
+        "";
 }
 
 
-/* -------------------------
-   구매 버튼
-------------------------- */
+/* =========================
+   구매
+========================= */
 
 function showPassword(){
 
     document.getElementById("paymentInfo")
-        .style.display = "none";
+        .style.display =
+        "none";
+
 
     document.getElementById("passwordScreen")
-        .style.display = "block";
+        .style.display =
+        "block";
 
-    setTimeout(()=>{
+
+    setTimeout(() => {
 
         document.getElementById("password")
             .focus();
@@ -969,58 +1536,83 @@ function showPassword(){
 }
 
 
-/* -------------------------
-   암호 확인
-------------------------- */
+/* =========================
+   인증
+========================= */
 
 function confirmPassword(){
 
     const password =
-        document.getElementById("password").value;
+        document.getElementById("password")
+            .value;
+
 
     /*
-      자체 모의 인증.
-      어떤 문자열이든 입력하면 진행.
-      입력값은 저장하거나 전송하지 않음.
+       자체 인증.
+       아무 문자열이나 입력하면 진행.
+       입력값은 저장하거나 전송하지 않음.
     */
 
-    if(password.length === 0) return;
+    if(password.length === 0){
+
+        return;
+    }
 
 
     document.getElementById("passwordScreen")
-        .style.display = "none";
+        .style.display =
+        "none";
+
 
     document.getElementById("loading")
-        .style.display = "block";
+        .style.display =
+        "block";
 
 
-    setTimeout(()=>{
+    /* 결제 처리 */
+
+    setTimeout(() => {
+
 
         document.getElementById("loading")
-            .style.display = "none";
+            .style.display =
+            "none";
+
 
         document.getElementById("success")
-            .style.display = "block";
+            .style.display =
+            "block";
 
-        premium = true;
+
+        premium =
+            true;
+
+
+        /* 결제 후 시간 설정 표시 */
 
         document.getElementById("settings")
             .classList.add("show");
 
 
-        /* 구매 완료 화면 */
+        /*
+           구매 완료 화면을
+           3초 동안 표시
+        */
 
-        setTimeout(()=>{
+        setTimeout(() => {
 
             closePayment();
 
         },3000);
 
+
     },2200);
 }
 
 
-/* 초기 화면 */
+/* =========================
+   시작
+========================= */
 
 updateDisplay();
 
