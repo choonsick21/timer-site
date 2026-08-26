@@ -8,7 +8,6 @@
 <style>
 *{
     box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
@@ -32,11 +31,8 @@ body{
     justify-content:center;
 
     overflow:hidden;
-    -webkit-font-smoothing:antialiased;
-}
 
-button,input{
-    font-family:inherit;
+    -webkit-font-smoothing:antialiased;
 }
 
 
@@ -53,7 +49,7 @@ button,input{
     font-size:30px;
     font-weight:700;
     letter-spacing:-1px;
-    margin-bottom:32px;
+    margin-bottom:30px;
 }
 
 .time{
@@ -61,7 +57,9 @@ button,input{
     line-height:1;
     font-weight:700;
     letter-spacing:-6px;
+
     font-variant-numeric:tabular-nums;
+
     margin-bottom:32px;
 }
 
@@ -69,31 +67,35 @@ button,input{
     display:flex;
     justify-content:center;
     gap:9px;
-    flex-wrap:wrap;
 }
 
 button{
     border:0;
     cursor:pointer;
+    font-family:inherit;
 }
 
 .primary{
     padding:15px 30px;
+
     border-radius:17px;
+
     background:#fff;
     color:#000;
+
     font-size:16px;
     font-weight:600;
 
-    transition:transform .15s ease;
+    transition:transform .12s ease;
 }
 
 .primary:active{
-    transform:scale(.96);
+    transform:scale(.95);
 }
 
 .secondary{
     padding:15px 20px;
+
     border-radius:17px;
 
     background:#1c1c1e;
@@ -104,7 +106,7 @@ button{
     font-size:15px;
 
     transition:
-        transform .15s ease,
+        transform .12s ease,
         background .15s ease;
 }
 
@@ -113,7 +115,7 @@ button{
 }
 
 .secondary:active{
-    transform:scale(.96);
+    transform:scale(.95);
 }
 
 
@@ -136,13 +138,14 @@ button{
     pointer-events:none;
 
     transition:
-        opacity .35s ease,
-        transform .35s ease;
+        opacity .3s ease,
+        transform .3s ease;
 }
 
 .settings.show{
     opacity:1;
     transform:translateY(0);
+
     pointer-events:auto;
 }
 
@@ -157,6 +160,7 @@ button{
     height:44px;
 
     border-radius:12px;
+
     border:1px solid #3a3a3c;
 
     background:#1c1c1e;
@@ -165,11 +169,13 @@ button{
     outline:none;
 
     text-align:center;
+
     font-size:16px;
 }
 
 .set{
     height:44px;
+
     margin-left:5px;
 
     padding:0 18px;
@@ -197,36 +203,38 @@ button{
 
     padding:12px;
 
-    background:rgba(0,0,0,.68);
+    background:rgba(0,0,0,.7);
 
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
 
     opacity:0;
     visibility:hidden;
     pointer-events:none;
 
     transition:
-        opacity .45s cubic-bezier(.22,1,.36,1);
+        opacity .35s ease;
 
     z-index:100;
 }
 
 .modal.open{
     opacity:1;
+
     visibility:visible;
     pointer-events:auto;
 }
 
 
 /* =========================
-   결제창
+   창
 ========================= */
 
 .sheet{
     position:relative;
 
     width:min(100%,450px);
+
     height:100px;
 
     overflow:hidden;
@@ -242,21 +250,21 @@ button{
             rgba(24,24,26,.98)
         );
 
-    border:1px solid rgba(255,255,255,.11);
+    border:1px solid rgba(255,255,255,.12);
 
     box-shadow:
-        0 -20px 70px rgba(0,0,0,.55);
+        0 -20px 70px rgba(0,0,0,.6);
 
     transform:
-        translate3d(0,45px,0)
-        scale(.985);
+        translate3d(0,55px,0)
+        scale(.98);
 
     opacity:0;
 
     transition:
-        height .62s cubic-bezier(.22,1,.36,1),
-        transform .62s cubic-bezier(.22,1,.36,1),
-        opacity .42s ease;
+        height .5s cubic-bezier(.22,1,.36,1),
+        transform .5s cubic-bezier(.22,1,.36,1),
+        opacity .3s ease;
 
     will-change:
         height,
@@ -278,49 +286,10 @@ button{
 
 .modal.closing .sheet{
     transform:
-        translate3d(0,30px,0)
-        scale(.985);
+        translate3d(0,35px,0)
+        scale(.98);
 
     opacity:0;
-}
-
-
-/* =========================
-   내부
-========================= */
-
-.sheet-content{
-    position:relative;
-    width:100%;
-}
-
-.page{
-    width:100%;
-
-    transition:
-        opacity .4s cubic-bezier(.22,1,.36,1),
-        transform .55s cubic-bezier(.22,1,.36,1);
-}
-
-.page.visible{
-    opacity:1;
-    transform:
-        translate3d(0,0,0)
-        scale(1);
-}
-
-.page.leaving{
-    opacity:0;
-    transform:
-        translate3d(0,18px,0)
-        scale(.97);
-}
-
-.page.entering{
-    opacity:0;
-    transform:
-        translate3d(0,18px,0)
-        scale(.97);
 }
 
 
@@ -332,9 +301,9 @@ button{
     width:38px;
     height:5px;
 
-    margin:0 auto 21px;
+    margin:0 auto 20px;
 
-    border-radius:20px;
+    border-radius:50px;
 
     background:#555;
 }
@@ -353,28 +322,27 @@ button{
     width:32px;
     height:32px;
 
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
     border-radius:50%;
 
     background:#303034;
     color:#aaa;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
     font-size:20px;
 
+    z-index:50;
+
     /*
-       마우스가 가까워지면
-       부드럽게 이동
+       빠르게 이동
     */
 
     transition:
-        left .32s cubic-bezier(.22,1,.36,1),
-        top .32s cubic-bezier(.22,1,.36,1),
-        transform .18s ease;
-
-    z-index:20;
+        left .11s cubic-bezier(.15,.8,.25,1),
+        top .11s cubic-bezier(.15,.8,.25,1),
+        transform .08s ease;
 }
 
 .close:active{
@@ -383,61 +351,116 @@ button{
 
 
 /* =========================
-   결제 화면
+   페이지
+========================= */
+
+.page{
+    width:100%;
+
+    transition:
+        opacity .3s ease,
+        transform .35s cubic-bezier(.22,1,.36,1);
+}
+
+.page.visible{
+    opacity:1;
+
+    transform:
+        translate3d(0,0,0)
+        scale(1);
+}
+
+.page.entering{
+    opacity:0;
+
+    transform:
+        translate3d(0,16px,0)
+        scale(.98);
+}
+
+.page.leaving{
+    opacity:0;
+
+    transform:
+        translate3d(0,-12px,0)
+        scale(.98);
+}
+
+
+/* =========================
+   상품
 ========================= */
 
 .store{
     text-align:center;
+
     font-size:17px;
     font-weight:600;
-    margin-bottom:23px;
+
+    margin-bottom:22px;
 }
 
 .product{
     text-align:center;
-    padding-bottom:21px;
-    border-bottom:1px solid #38383a;
+
+    padding-bottom:20px;
+
+    border-bottom:
+        1px solid #38383a;
 }
 
 .product-name{
     font-size:24px;
     font-weight:700;
+
     letter-spacing:-.7px;
 }
 
 .sub{
     color:#98989d;
+
     font-size:13px;
+
     margin-top:7px;
 }
 
 .price{
     text-align:center;
-    padding:21px 0;
+
+    padding:20px 0;
 
     font-size:40px;
     font-weight:700;
+
     letter-spacing:-1.5px;
 }
 
 .billing{
     display:block;
 
+    margin-top:5px;
+
     color:#98989d;
+
     font-size:12px;
     font-weight:400;
-
-    margin-top:5px;
 }
+
+
+/* =========================
+   정보
+========================= */
 
 .info{
     display:flex;
+
     align-items:center;
     justify-content:space-between;
 
-    padding:15px 0;
+    padding:14px 0;
 
-    border-bottom:1px solid #38383a;
+    border-bottom:
+        1px solid #38383a;
 }
 
 .label{
@@ -446,22 +469,31 @@ button{
 }
 
 .value{
-    font-size:12px;
-    text-align:right;
-
     max-width:65%;
 
     overflow:hidden;
     text-overflow:ellipsis;
+
+    font-size:12px;
+
+    text-align:right;
 }
 
+
+/* =========================
+   혜택
+========================= */
+
 .benefits{
-    padding:15px 0;
-    border-bottom:1px solid #38383a;
+    padding:14px 0;
+
+    border-bottom:
+        1px solid #38383a;
 }
 
 .benefit{
     margin:8px 0;
+
     font-size:13px;
 }
 
@@ -474,7 +506,7 @@ button{
     width:100%;
     height:54px;
 
-    margin-top:19px;
+    margin-top:18px;
 
     border-radius:15px;
 
@@ -485,11 +517,11 @@ button{
     font-weight:600;
 
     transition:
-        transform .15s ease;
+        transform .12s ease;
 }
 
 .buy:active{
-    transform:scale(.97);
+    transform:scale(.96);
 }
 
 
@@ -499,6 +531,7 @@ button{
 
 .password-page{
     text-align:center;
+
     padding:20px 4px 5px;
 }
 
@@ -516,11 +549,12 @@ button{
     align-items:center;
     justify-content:center;
 
-    font-size:25px;
+    font-size:24px;
 }
 
 .password-page h2{
     margin:0 0 8px;
+
     font-size:22px;
 }
 
@@ -528,6 +562,7 @@ button{
     margin:0 0 22px;
 
     color:#98989d;
+
     font-size:13px;
 }
 
@@ -545,6 +580,7 @@ button{
     outline:none;
 
     text-align:center;
+
     font-size:16px;
 }
 
@@ -569,6 +605,7 @@ button{
 
 .loading-page{
     text-align:center;
+
     padding:40px 4px;
 }
 
@@ -581,20 +618,24 @@ button{
     border-radius:50%;
 
     border:3px solid #444;
+
     border-top-color:#fff;
 
     animation:
-        spin .8s linear infinite;
+        spin .7s linear infinite;
 }
 
 @keyframes spin{
+
     to{
         transform:rotate(360deg);
     }
+
 }
 
 .loading-page h2{
     margin:0 0 8px;
+
     font-size:21px;
 }
 
@@ -602,6 +643,7 @@ button{
     margin:0;
 
     color:#98989d;
+
     font-size:13px;
 }
 
@@ -612,6 +654,7 @@ button{
 
 .success-page{
     text-align:center;
+
     padding:30px 4px;
 }
 
@@ -635,6 +678,7 @@ button{
 
 .success-page h2{
     margin:0 0 8px;
+
     font-size:23px;
 }
 
@@ -642,7 +686,9 @@ button{
     margin:0;
 
     color:#98989d;
+
     font-size:13px;
+
     line-height:1.6;
 }
 
@@ -655,12 +701,14 @@ button{
 
     .sheet{
         padding:21px;
+
         border-radius:28px;
     }
 
     .price{
         font-size:37px;
     }
+
 }
 
 </style>
@@ -669,10 +717,6 @@ button{
 
 <body>
 
-
-<!-- =========================
-     메인 타이머
-========================= -->
 
 <div class="app">
 
@@ -686,6 +730,7 @@ button{
     >
         00:03
     </div>
+
 
     <div class="controls">
 
@@ -745,7 +790,7 @@ button{
 
 
 <!-- =========================
-     결제 창
+     결제창
 ========================= -->
 
 <div
@@ -765,16 +810,12 @@ button{
             class="close"
             id="closeButton"
             onclick="closePayment()"
-            aria-label="닫기"
         >
             ×
         </button>
 
 
-        <div
-            class="sheet-content"
-            id="sheetContent"
-        >
+        <div class="sheet-content">
 
 
             <!-- 결제 -->
@@ -890,7 +931,6 @@ button{
                         id="password"
                         type="password"
                         placeholder="암호"
-                        autocomplete="off"
                     >
 
                     <button
@@ -906,7 +946,7 @@ button{
 
 
 
-            <!-- 로딩 -->
+            <!-- 처리 -->
 
             <div
                 class="page entering"
@@ -952,7 +992,7 @@ button{
 
                     <p>
                         프리미엄 이용권이 활성화되었습니다.<br>
-                        이제 타이머 시간을 자유롭게 설정할 수 있습니다.
+                        타이머 시간을 자유롭게 설정할 수 있습니다.
                     </p>
 
                 </div>
@@ -970,11 +1010,11 @@ button{
 <script>
 
 /* =========================
-   타이머
+   기본 변수
 ========================= */
 
 let running = false;
-let timer = null;
+let animationFrame = null;
 
 let remaining = 3;
 let defaultSeconds = 3;
@@ -984,13 +1024,17 @@ let endTime = 0;
 let premium = false;
 
 
+/* =========================
+   시간 표시
+========================= */
+
 function updateDisplay(){
 
     const minutes =
         Math.floor(remaining / 60);
 
     const seconds =
-        Math.floor(remaining % 60);
+        remaining % 60;
 
     document.getElementById("time")
         .textContent =
@@ -999,6 +1043,10 @@ function updateDisplay(){
         String(seconds).padStart(2,"0");
 }
 
+
+/* =========================
+   타이머
+========================= */
 
 function tick(){
 
@@ -1010,29 +1058,30 @@ function tick(){
         Math.max(
             0,
             Math.ceil(
-                (
-                    endTime -
-                    performance.now()
-                ) / 1000
+                (endTime - performance.now())
+                / 1000
             )
         );
 
     updateDisplay();
 
+
     if(remaining <= 0){
 
         running = false;
-        timer = null;
+        animationFrame = null;
+
 
         if(!premium){
 
             setTimeout(
                 openPayment,
-                250
+                200
             );
 
             return;
         }
+
 
         remaining =
             defaultSeconds;
@@ -1042,7 +1091,8 @@ function tick(){
         return;
     }
 
-    timer =
+
+    animationFrame =
         requestAnimationFrame(tick);
 }
 
@@ -1053,16 +1103,22 @@ function startTimer(){
         return;
     }
 
+
     if(remaining <= 0){
-        remaining = defaultSeconds;
+
+        remaining =
+            defaultSeconds;
     }
 
+
     running = true;
+
 
     endTime =
         performance.now()
         +
         remaining * 1000;
+
 
     tick();
 }
@@ -1074,23 +1130,29 @@ function pauseTimer(){
         return;
     }
 
+
     remaining =
         Math.max(
             0,
             Math.ceil(
-                (
-                    endTime -
-                    performance.now()
-                ) / 1000
+                (endTime - performance.now())
+                / 1000
             )
         );
 
+
     running = false;
 
-    if(timer){
-        cancelAnimationFrame(timer);
-        timer = null;
+
+    if(animationFrame){
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+
+        animationFrame = null;
     }
+
 
     updateDisplay();
 }
@@ -1117,29 +1179,34 @@ function setTime(){
         return;
     }
 
+
     let value =
         Number(
-            document
-            .getElementById("timeInput")
-            .value
+            document.getElementById(
+                "timeInput"
+            ).value
         );
+
 
     if(!value || value < 1){
         return;
     }
 
+
     value =
         Math.min(value,9999);
 
+
     defaultSeconds =
         value;
+
 
     resetTimer();
 }
 
 
 /* =========================
-   결제창
+   결제창 열기
 ========================= */
 
 function openPayment(){
@@ -1148,14 +1215,22 @@ function openPayment(){
         document.getElementById("modal");
 
     const payment =
-        document.getElementById("paymentPage");
+        document.getElementById(
+            "paymentPage"
+        );
+
 
     resizeSheet(payment);
 
-    modal.style.visibility = "visible";
+
+    modal.style.visibility =
+        "visible";
+
 
     requestAnimationFrame(() => {
+
         modal.classList.add("open");
+
     });
 }
 
@@ -1169,6 +1244,7 @@ function resizeSheet(page){
     const sheet =
         document.getElementById("sheet");
 
+
     const oldDisplay =
         page.style.display;
 
@@ -1178,12 +1254,20 @@ function resizeSheet(page){
     const oldVisibility =
         page.style.visibility;
 
-    page.style.display = "block";
-    page.style.position = "absolute";
-    page.style.visibility = "hidden";
 
-    const pageHeight =
+    page.style.display =
+        "block";
+
+    page.style.position =
+        "absolute";
+
+    page.style.visibility =
+        "hidden";
+
+
+    const height =
         page.offsetHeight;
+
 
     page.style.position =
         oldPosition;
@@ -1191,58 +1275,76 @@ function resizeSheet(page){
     page.style.visibility =
         oldVisibility;
 
+
     if(oldDisplay){
         page.style.display =
             oldDisplay;
     }
 
-    const totalHeight =
-        pageHeight + 72;
 
     sheet.style.height =
-        totalHeight + "px";
+        (height + 70) + "px";
 }
 
 
 /* =========================
-   화면 전환
+   페이지 전환
 ========================= */
 
 function changePage(from,to){
 
-    to.style.display = "block";
+    to.style.display =
+        "block";
+
 
     to.classList.remove(
         "visible",
         "leaving"
     );
 
-    to.classList.add("entering");
 
-    /*
-       다음 화면에 맞춰
-       창 높이도 같이 움직임
-    */
+    to.classList.add(
+        "entering"
+    );
+
 
     resizeSheet(to);
 
-    from.classList.remove("visible");
-    from.classList.add("leaving");
+
+    from.classList.remove(
+        "visible"
+    );
+
+
+    from.classList.add(
+        "leaving"
+    );
+
 
     setTimeout(() => {
 
-        from.style.display = "none";
+        from.style.display =
+            "none";
 
-        from.classList.remove("leaving");
+
+        from.classList.remove(
+            "leaving"
+        );
+
 
         requestAnimationFrame(() => {
 
-            to.classList.remove("entering");
-            to.classList.add("visible");
+            to.classList.remove(
+                "entering"
+            );
+
+            to.classList.add(
+                "visible"
+            );
 
         });
 
-    },400);
+    },320);
 }
 
 
@@ -1262,18 +1364,22 @@ function showPassword(){
             "passwordPage"
         );
 
+
     changePage(
         payment,
         password
     );
 
+
     setTimeout(() => {
 
         document
-            .getElementById("password")
+            .getElementById(
+                "password"
+            )
             .focus();
 
-    },800);
+    },500);
 }
 
 
@@ -1284,13 +1390,15 @@ function showPassword(){
 function confirmPassword(){
 
     const password =
-        document
-        .getElementById("password")
-        .value;
+        document.getElementById(
+            "password"
+        ).value;
+
 
     if(password.length === 0){
         return;
     }
+
 
     const passwordPage =
         document.getElementById(
@@ -1301,6 +1409,7 @@ function confirmPassword(){
         document.getElementById(
             "loadingPage"
         );
+
 
     changePage(
         passwordPage,
@@ -1320,23 +1429,30 @@ function confirmPassword(){
                 "successPage"
             );
 
+
         changePage(
             loading,
             success
         );
 
+
         premium = true;
 
+
         document
-            .getElementById("settings")
+            .getElementById(
+                "settings"
+            )
             .classList.add("show");
 
 
         setTimeout(() => {
-            closePayment();
-        },3500);
 
-    },2200);
+            closePayment();
+
+        },3000);
+
+    },2000);
 }
 
 
@@ -1347,21 +1463,35 @@ function confirmPassword(){
 function closePayment(){
 
     const modal =
-        document.getElementById("modal");
+        document.getElementById(
+            "modal"
+        );
 
-    modal.classList.remove("open");
-    modal.classList.add("closing");
+
+    modal.classList.remove(
+        "open"
+    );
+
+
+    modal.classList.add(
+        "closing"
+    );
+
 
     setTimeout(() => {
 
-        modal.classList.remove("closing");
+        modal.classList.remove(
+            "closing"
+        );
+
 
         modal.style.visibility =
             "hidden";
 
+
         resetPages();
 
-    },650);
+    },520);
 }
 
 
@@ -1394,7 +1524,8 @@ function resetPages(){
 
     pages.forEach(page => {
 
-        page.style.display = "none";
+        page.style.display =
+            "none";
 
         page.classList.remove(
             "visible",
@@ -1410,9 +1541,13 @@ function resetPages(){
             "paymentPage"
         );
 
-    payment.style.display = "block";
 
-    payment.classList.add("visible");
+    payment.style.display =
+        "block";
+
+    payment.classList.add(
+        "visible"
+    );
 
 
     document.getElementById(
@@ -1420,34 +1555,37 @@ function resetPages(){
     ).value = "";
 
 
-    /*
-       X 위치 원상복구
-    */
+    /* X 원래 위치 */
 
     const close =
         document.getElementById(
             "closeButton"
         );
 
-    close.style.position = "absolute";
-    close.style.left = "";
-    close.style.top = "";
 
-    close.style.right = "18px";
-    close.style.transform = "";
+    close.style.position =
+        "absolute";
+
+    close.style.left =
+        "";
+
+    close.style.top =
+        "";
+
+    close.style.right =
+        "18px";
 
 
     setTimeout(() => {
+
         resizeSheet(payment);
+
     },20);
 }
 
 
 /* =========================
-   X 버튼 도망
-
-   마우스가 가까워질수록
-   반대 방향으로 조금 이동
+   X 버튼 빠른 회피
 ========================= */
 
 const closeButton =
@@ -1466,11 +1604,18 @@ const modal =
     );
 
 
+let lastEscape = 0;
+
+
 document.addEventListener(
     "mousemove",
-    function(event){
+    (event) => {
 
-        if(!modal.classList.contains("open")){
+        if(
+            !modal.classList.contains(
+                "open"
+            )
+        ){
             return;
         }
 
@@ -1498,56 +1643,69 @@ document.addEventListener(
 
 
         const distance =
-            Math.sqrt(
-                dx * dx +
-                dy * dy
-            );
+            Math.hypot(dx,dy);
 
 
         /*
-           70px 안으로 접근하면
-           살짝 도망
+           가까워졌을 때만 작동
         */
 
-        if(distance < 70){
+        if(distance < 85){
 
-            const length =
-                Math.sqrt(
-                    dx * dx +
-                    dy * dy
-                ) || 1;
+            const now =
+                performance.now();
 
 
             /*
-               너무 멀리 안 도망가도록
-               22px 정도만 이동
+               너무 자주 움직이지 않도록
+               70ms 제한
+            */
+
+            if(
+                now - lastEscape <
+                70
+            ){
+                return;
+            }
+
+
+            lastEscape =
+                now;
+
+
+            const length =
+                Math.hypot(dx,dy) || 1;
+
+
+            /*
+               빠르게 34px 회피
             */
 
             const move =
-                22;
+                34;
 
 
-            let newX =
-                closeButton.offsetLeft +
-                (dx / length) *
-                move;
+            let x =
+                closeButton.offsetLeft
+                +
+                (dx / length) * move;
 
 
-            let newY =
-                closeButton.offsetTop +
-                (dy / length) *
-                move;
+            let y =
+                closeButton.offsetTop
+                +
+                (dy / length) * move;
 
 
             /*
                창 내부 제한
             */
 
-            newX =
+            x =
                 Math.max(
                     8,
                     Math.min(
-                        newX,
+                        x,
                         sheet.clientWidth -
                         closeButton.offsetWidth -
                         8
@@ -1555,11 +1713,11 @@ document.addEventListener(
                 );
 
 
-            newY =
+            y =
                 Math.max(
                     8,
                     Math.min(
-                        newY,
+                        y,
                         sheet.clientHeight -
                         closeButton.offsetHeight -
                         8
@@ -1570,14 +1728,18 @@ document.addEventListener(
             closeButton.style.position =
                 "absolute";
 
-            closeButton.style.left =
-                newX + "px";
-
-            closeButton.style.top =
-                newY + "px";
 
             closeButton.style.right =
                 "auto";
+
+
+            closeButton.style.left =
+                x + "px";
+
+
+            closeButton.style.top =
+                y + "px";
+
         }
 
     }
@@ -1585,21 +1747,21 @@ document.addEventListener(
 
 
 /* =========================
-   인증 엔터
+   엔터키
 ========================= */
 
 document
-.getElementById("password")
-.addEventListener(
-    "keydown",
-    function(event){
+    .getElementById("password")
+    .addEventListener(
+        "keydown",
+        (event) => {
 
-        if(event.key === "Enter"){
-            confirmPassword();
+            if(event.key === "Enter"){
+                confirmPassword();
+            }
+
         }
-
-    }
-);
+    );
 
 
 /* =========================
