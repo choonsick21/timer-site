@@ -1,55 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Timer</title>
+
+<style>
+
 /* =========================
-   부드러운 페이드
+   기본
 ========================= */
 
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: #000;
+    color: #fff;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Pretendard",
+        "Segoe UI",
+        sans-serif;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================
+   메인 화면
+========================= */
+
+.app {
+    width: min(90vw, 520px);
+    text-align: center;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 32px;
+}
+
+.time {
+    font-size: clamp(75px, 18vw, 105px);
+    line-height: 1;
+
+    font-weight: 700;
+    letter-spacing: -6px;
+
+    font-variant-numeric: tabular-nums;
+
+    margin-bottom: 32px;
+
+    user-select: none;
+}
+
+
+/* =========================
+   버튼
+========================= */
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+button {
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.primary {
+    padding: 15px 28px;
+
+    border-radius: 17px;
+
+    background: #fff;
+    color: #000;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    transition: transform .15s ease;
+}
+
+.primary:hover {
+    transform: scale(1.03);
+}
+
+.primary:active {
+    transform: scale(.97);
+}
+
+.secondary {
+    padding: 15px 20px;
+
+    border-radius: 17px;
+
+    background: #1c1c1e;
+    color: #fff;
+
+    border: 1px solid #303034;
+
+    font-size: 15px;
+
+    transition:
+        background .15s ease,
+        transform .15s ease;
+}
+
+.secondary:hover {
+    background: #29292b;
+}
+
+.secondary:active {
+    transform: scale(.97);
+}
+
+
+/* =========================
+   프리미엄 설정
+========================= */
+
+.settings {
+    margin-top: 25px;
+
+    padding: 17px;
+
+    border-radius: 20px;
+
+    background: #111;
+
+    border: 1px solid #242424;
+
+    opacity: 0;
+
+    transform: translateY(8px);
+
+    pointer-events: none;
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+}
+
+.settings.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.settings-title {
+    color: #999;
+    font-size: 12px;
+
+    margin-bottom: 10px;
+}
+
+.time-input {
+    width: 110px;
+    height: 44px;
+
+    border-radius: 12px;
+
+    border: 1px solid #3a3a3c;
+
+    background: #1c1c1e;
+
+    color: #fff;
+
+    outline: none;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+.set {
+    height: 44px;
+
+    margin-left: 5px;
+
+    padding: 0 18px;
+
+    border-radius: 12px;
+
+    background: #fff;
+    color: #000;
+
+    font-weight: 600;
+}
+
+
+/* ==================================================
+   결제 배경
+================================================== */
+
 .modal {
+
     position: fixed;
+
     inset: 0;
 
     display: flex;
+
     align-items: flex-end;
+
     justify-content: center;
 
     padding: 12px;
 
-    /* 배경은 항상 존재하게 함 */
-    background: rgba(0,0,0,.64);
+    background: rgba(0,0,0,.68);
 
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
 
     opacity: 0;
+
     visibility: hidden;
+
     pointer-events: none;
 
-    /*
-       배경은 아주 천천히
-    */
     transition:
         opacity .45s cubic-bezier(.22,1,.36,1);
 
     z-index: 100;
 }
 
-
-/* 열림 */
-
 .modal.open {
+
     opacity: 1;
+
     visibility: visible;
+
     pointer-events: auto;
 }
 
 
-/* =========================
+/* ==================================================
    결제창
-========================= */
+================================================== */
 
 .sheet {
 
     position: relative;
 
-    width: min(100%,450px);
+    width: min(100%, 450px);
 
     max-height: 94vh;
 
@@ -71,21 +290,11 @@
     box-shadow:
         0 -25px 80px rgba(0,0,0,.55);
 
-
-    /*
-       시작 상태
-    */
-
     transform:
         translate3d(0,45px,0)
         scale(.985);
 
     opacity: 0;
-
-
-    /*
-       창 자체만 움직임
-    */
 
     transition:
         transform .58s cubic-bezier(.22,1,.36,1),
@@ -100,9 +309,7 @@
 }
 
 
-/* =========================
-   열릴 때
-========================= */
+/* 열림 */
 
 .modal.open .sheet {
 
@@ -114,9 +321,7 @@
 }
 
 
-/* =========================
-   닫힐 때
-========================= */
+/* 닫힘 */
 
 .modal.closing {
 
@@ -124,7 +329,6 @@
 
     pointer-events: none;
 }
-
 
 .modal.closing .sheet {
 
@@ -134,3 +338,1233 @@
 
     opacity: 0;
 }
+
+
+/* =========================
+   위 손잡이
+========================= */
+
+.handle {
+
+    width: 38px;
+    height: 5px;
+
+    margin: 0 auto 21px;
+
+    border-radius: 20px;
+
+    background: #555;
+}
+
+
+/* =========================
+   닫기 버튼
+========================= */
+
+.close {
+
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #303034;
+
+    color: #aaa;
+
+    font-size: 20px;
+
+    transition:
+        transform .15s ease,
+        left .16s ease,
+        top .16s ease;
+}
+
+.close:hover {
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   결제 정보
+========================= */
+
+.store {
+
+    text-align: center;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    margin-bottom: 23px;
+}
+
+.product {
+
+    text-align: center;
+
+    padding-bottom: 21px;
+
+    border-bottom: 1px solid #38383a;
+}
+
+.product-name {
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    letter-spacing: -.7px;
+}
+
+.sub {
+
+    color: #98989d;
+
+    font-size: 13px;
+
+    margin-top: 7px;
+}
+
+
+/* 가격 */
+
+.price {
+
+    text-align: center;
+
+    padding: 21px 0;
+
+    font-size: 40px;
+
+    font-weight: 700;
+
+    letter-spacing: -1.5px;
+}
+
+.billing {
+
+    display: block;
+
+    color: #98989d;
+
+    font-size: 12px;
+
+    font-weight: 400;
+
+    margin-top: 5px;
+}
+
+
+/* 정보 */
+
+.info {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #38383a;
+}
+
+.label {
+
+    color: #98989d;
+
+    font-size: 13px;
+}
+
+.value {
+
+    font-size: 12px;
+
+    text-align: right;
+
+    max-width: 65%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   혜택
+========================= */
+
+.benefits {
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #38383a;
+}
+
+.benefit {
+
+    margin: 8px 0;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   구매 버튼
+========================= */
+
+.buy {
+
+    width: 100%;
+
+    height: 54px;
+
+    margin-top: 19px;
+
+    border-radius: 15px;
+
+    background: #fff;
+
+    color: #000;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition:
+        transform .15s ease;
+}
+
+.buy:active {
+    transform: scale(.97);
+}
+
+
+/* =========================
+   암호 화면
+========================= */
+
+.password-screen {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 18px 4px 4px;
+}
+
+.icon {
+
+    font-size: 38px;
+
+    margin-bottom: 15px;
+}
+
+.password-screen h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 22px;
+}
+
+.password-screen p {
+
+    margin: 0 0 20px;
+
+    color: #98989d;
+
+    font-size: 13px;
+}
+
+.password {
+
+    width: 100%;
+
+    height: 50px;
+
+    border-radius: 13px;
+
+    border: 1px solid #444;
+
+    background: #2c2c2e;
+
+    color: #fff;
+
+    outline: none;
+
+    text-align: center;
+
+    font-size: 16px;
+
+    padding: 0 15px;
+}
+
+.confirm {
+
+    width: 100%;
+
+    height: 52px;
+
+    margin-top: 12px;
+
+    border-radius: 14px;
+
+    background: #fff;
+
+    color: #000;
+
+    font-weight: 600;
+}
+
+
+/* =========================
+   로딩
+========================= */
+
+.loading {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 38px 4px;
+}
+
+.spinner {
+
+    width: 35px;
+    height: 35px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    border: 3px solid #444;
+
+    border-top-color: #fff;
+
+    animation:
+        spin .8s linear infinite;
+}
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 21px;
+}
+
+.loading p {
+
+    margin: 0;
+
+    color: #98989d;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   완료
+========================= */
+
+.success {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 30px 4px;
+}
+
+.check {
+
+    width: 68px;
+    height: 68px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    color: #000;
+
+    font-size: 34px;
+}
+
+.success h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 23px;
+}
+
+.success p {
+
+    margin: 0;
+
+    color: #98989d;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   모바일
+========================= */
+
+@media(max-width:500px) {
+
+    .sheet {
+        padding: 21px;
+        border-radius: 28px;
+    }
+
+    .price {
+        font-size: 37px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     메인 타이머
+================================================== -->
+
+<div class="app">
+
+    <div class="title">
+        Timer
+    </div>
+
+    <div
+        class="time"
+        id="time"
+    >
+        00:03
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            class="primary"
+            onclick="startTimer()"
+        >
+            시작
+        </button>
+
+        <button
+            class="secondary"
+            onclick="pauseTimer()"
+        >
+            일시정지
+        </button>
+
+        <button
+            class="secondary"
+            onclick="resetTimer()"
+        >
+            초기화
+        </button>
+
+    </div>
+
+
+    <!-- 구매 후에만 표시 -->
+
+    <div
+        class="settings"
+        id="settings"
+    >
+
+        <div class="settings-title">
+            타이머 시간 설정
+        </div>
+
+        <input
+            class="time-input"
+            id="timeInput"
+            type="number"
+            min="1"
+            max="9999"
+            value="3"
+        >
+
+        <button
+            class="set"
+            onclick="setTime()"
+        >
+            설정
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     결제 화면
+================================================== -->
+
+<div
+    class="modal"
+    id="modal"
+>
+
+    <div
+        class="sheet"
+        id="sheet"
+    >
+
+        <div class="handle"></div>
+
+
+        <!-- 닫기 -->
+
+        <button
+            class="close"
+            id="closeButton"
+            onmouseenter="escapeClose()"
+            onclick="cancelPayment()"
+        >
+            ×
+        </button>
+
+
+        <!-- =========================
+             결제 정보
+        ========================= -->
+
+        <div id="paymentInfo">
+
+            <div class="store">
+                App Store
+            </div>
+
+
+            <div class="product">
+
+                <div class="product-name">
+                    3초 타이머 프리미엄
+                </div>
+
+                <div class="sub">
+                    앱 내 구입 · 일회성
+                </div>
+
+            </div>
+
+
+            <div class="price">
+
+                ₩100,000
+
+                <span class="billing">
+                    일회성 청구
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="label">
+                    구매 계정
+                </div>
+
+                <div class="value">
+                    chunhe0208@icloud.com
+                </div>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="label">
+                    결제 수단
+                </div>
+
+                <div class="value">
+                    등록된 결제 수단
+                </div>
+
+            </div>
+
+
+            <div class="benefits">
+
+                <div class="benefit">
+                    ✓ 3초 타이머 무제한 사용
+                </div>
+
+                <div class="benefit">
+                    ✓ 광고 없음
+                </div>
+
+            </div>
+
+
+            <button
+                class="buy"
+                onclick="showPassword()"
+            >
+                ₩100,000 구매
+            </button>
+
+        </div>
+
+
+
+        <!-- =========================
+             인증
+        ========================= -->
+
+        <div
+            class="password-screen"
+            id="passwordScreen"
+        >
+
+            <div class="icon">
+                🔒
+            </div>
+
+            <h2>
+                구매 인증
+            </h2>
+
+            <p>
+                계속하려면 암호를 입력하세요.
+            </p>
+
+            <input
+                class="password"
+                id="password"
+                type="password"
+                autocomplete="off"
+                placeholder="암호"
+            >
+
+            <button
+                class="confirm"
+                onclick="confirmPassword()"
+            >
+                계속
+            </button>
+
+        </div>
+
+
+
+        <!-- =========================
+             결제 처리
+        ========================= -->
+
+        <div
+            class="loading"
+            id="loading"
+        >
+
+            <div class="spinner"></div>
+
+            <h2>
+                결제 처리 중
+            </h2>
+
+            <p>
+                잠시만 기다려 주세요.
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             완료
+        ========================= -->
+
+        <div
+            class="success"
+            id="success"
+        >
+
+            <div class="check">
+                ✓
+            </div>
+
+            <h2>
+                구매 완료
+            </h2>
+
+            <p>
+                프리미엄 이용권이 활성화되었습니다.<br>
+                이제 타이머를 무제한으로 사용할 수 있습니다.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* ==================================================
+   상태
+================================================== */
+
+let timer = null;
+
+let endTime = null;
+
+let remaining = 3;
+
+let defaultSeconds = 3;
+
+let running = false;
+
+let premium = false;
+
+
+/* ==================================================
+   화면 표시
+================================================== */
+
+function updateDisplay() {
+
+    const minutes =
+        Math.floor(remaining / 60);
+
+    const seconds =
+        Math.floor(remaining % 60);
+
+
+    document.getElementById("time").textContent =
+
+        String(minutes).padStart(2, "0")
+        +
+        ":"
+        +
+        String(seconds).padStart(2, "0");
+}
+
+
+/* ==================================================
+   타이머
+================================================== */
+
+function tick() {
+
+    if (!running) {
+        return;
+    }
+
+
+    const now =
+        performance.now();
+
+
+    const secondsLeft =
+        Math.ceil(
+            (endTime - now) / 1000
+        );
+
+
+    remaining =
+        Math.max(0, secondsLeft);
+
+
+    updateDisplay();
+
+
+    if (remaining <= 0) {
+
+        running = false;
+
+        timer = null;
+
+        endTime = null;
+
+
+        /*
+           구매 전이면
+           결제 화면
+        */
+
+        if (!premium) {
+
+            setTimeout(() => {
+
+                openPayment();
+
+            }, 300);
+
+            return;
+        }
+
+
+        /*
+           구매 후에는
+           설정한 시간으로 돌아감
+        */
+
+        remaining =
+            defaultSeconds;
+
+        updateDisplay();
+
+        return;
+    }
+
+
+    timer =
+        requestAnimationFrame(() => {
+
+            setTimeout(tick, 50);
+
+        });
+}
+
+
+/* ==================================================
+   시작
+================================================== */
+
+function startTimer() {
+
+    if (running) {
+        return;
+    }
+
+
+    if (remaining <= 0) {
+
+        remaining =
+            defaultSeconds;
+    }
+
+
+    running = true;
+
+
+    endTime =
+        performance.now()
+        +
+        remaining * 1000;
+
+
+    tick();
+}
+
+
+/* ==================================================
+   일시정지
+================================================== */
+
+function pauseTimer() {
+
+    if (!running) {
+        return;
+    }
+
+
+    const now =
+        performance.now();
+
+
+    remaining =
+        Math.max(
+            0,
+            Math.ceil(
+                (endTime - now) / 1000
+            )
+        );
+
+
+    running = false;
+
+    endTime = null;
+
+
+    if (timer !== null) {
+
+        cancelAnimationFrame(timer);
+
+        timer = null;
+    }
+
+
+    updateDisplay();
+}
+
+
+/* ==================================================
+   초기화
+================================================== */
+
+function resetTimer() {
+
+    pauseTimer();
+
+
+    remaining =
+        defaultSeconds;
+
+
+    updateDisplay();
+}
+
+
+/* ==================================================
+   시간 설정
+================================================== */
+
+function setTime() {
+
+    if (!premium) {
+        return;
+    }
+
+
+    let value =
+        Number(
+            document
+            .getElementById("timeInput")
+            .value
+        );
+
+
+    if (!value || value < 1) {
+        return;
+    }
+
+
+    value =
+        Math.min(value, 9999);
+
+
+    defaultSeconds =
+        value;
+
+
+    resetTimer();
+}
+
+
+/* ==================================================
+   결제창 열기
+================================================== */
+
+function openPayment() {
+
+    const modal =
+        document.getElementById("modal");
+
+
+    modal.classList.remove("closing");
+
+
+    /*
+       먼저 보이게 만든 다음
+       다음 화면 갱신에서 open
+    */
+
+    modal.style.visibility =
+        "visible";
+
+
+    requestAnimationFrame(() => {
+
+        modal.classList.add("open");
+
+    });
+}
+
+
+/* ==================================================
+   X 버튼 도망
+================================================== */
+
+function escapeClose() {
+
+    const button =
+        document.getElementById("closeButton");
+
+    const sheet =
+        document.getElementById("sheet");
+
+
+    const maxX =
+        Math.max(
+            20,
+            sheet.clientWidth - 65
+        );
+
+
+    const maxY =
+        Math.max(
+            20,
+            sheet.clientHeight - 65
+        );
+
+
+    const x =
+        15 +
+        Math.random()
+        *
+        Math.max(10, maxX - 15);
+
+
+    const y =
+        15 +
+        Math.random()
+        *
+        Math.max(10, maxY - 15);
+
+
+    button.style.position =
+        "absolute";
+
+
+    button.style.left =
+        x + "px";
+
+
+    button.style.top =
+        y + "px";
+}
+
+
+/* ==================================================
+   결제 취소
+================================================== */
+
+function cancelPayment() {
+
+    closePayment();
+}
+
+
+/* ==================================================
+   결제창 닫기
+================================================== */
+
+function closePayment() {
+
+    const modal =
+        document.getElementById("modal");
+
+
+    modal.classList.remove("open");
+
+    modal.classList.add("closing");
+
+
+    setTimeout(() => {
+
+        modal.classList.remove("closing");
+
+        modal.style.visibility =
+            "hidden";
+
+        resetPayment();
+
+    }, 620);
+}
+
+
+/* ==================================================
+   결제 화면 초기화
+================================================== */
+
+function resetPayment() {
+
+    document.getElementById("paymentInfo")
+        .style.display =
+        "block";
+
+
+    document.getElementById("passwordScreen")
+        .style.display =
+        "none";
+
+
+    document.getElementById("loading")
+        .style.display =
+        "none";
+
+
+    document.getElementById("success")
+        .style.display =
+        "none";
+
+
+    document.getElementById("password")
+        .value =
+        "";
+
+
+    const button =
+        document.getElementById("closeButton");
+
+
+    button.style.position =
+        "";
+
+    button.style.left =
+        "";
+
+    button.style.top =
+        "";
+}
+
+
+/* ==================================================
+   구매 버튼
+================================================== */
+
+function showPassword() {
+
+    document.getElementById("paymentInfo")
+        .style.display =
+        "none";
+
+
+    document.getElementById("passwordScreen")
+        .style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        document.getElementById("password")
+            .focus();
+
+    }, 100);
+}
+
+
+/* ==================================================
+   인증
+================================================== */
+
+function confirmPassword() {
+
+    const password =
+        document
+        .getElementById("password")
+        .value;
+
+
+    /*
+       테스트용 자체 인증.
+
+       입력값은 저장하거나
+       인터넷으로 보내지 않음.
+    */
+
+    if (password.length === 0) {
+        return;
+    }
+
+
+    document.getElementById("passwordScreen")
+        .style.display =
+        "none";
+
+
+    document.getElementById("loading")
+        .style.display =
+        "block";
+
+
+    /*
+       결제 처리 애니메이션
+    */
+
+    setTimeout(() => {
+
+        document.getElementById("loading")
+            .style.display =
+            "none";
+
+
+        document.getElementById("success")
+            .style.display =
+            "block";
+
+
+        premium =
+            true;
+
+
+        /*
+           프리미엄 설정 활성화
+        */
+
+        document.getElementById("settings")
+            .classList.add("show");
+
+
+        /*
+           구매 완료 화면 유지
+        */
+
+        setTimeout(() => {
+
+            closePayment();
+
+        }, 3000);
+
+
+    }, 2200);
+}
+
+
+/* ==================================================
+   처음 표시
+================================================== */
+
+updateDisplay();
+
+</script>
+
+</body>
+</html>
